@@ -1,0 +1,12 @@
+# dist
+dist
+# tgz
+BlogServer.tar.gz
+# imgs
+imgs
+# pkg
+client/node_modules
+
+client/.vscode
+
+service_go
