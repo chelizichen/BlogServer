@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
-  name: "layout-component",
-};
+  name: 'layout-component'
+}
 </script>
 <template>
   <el-container>
@@ -19,7 +19,7 @@ export default {
           >
             <el-menu-item>
               <el-icon style="color: rgb(207, 90, 124); font-size: 36px"><Help /></el-icon>
-              <template #title >
+              <template #title>
                 <div style="color: rgb(207, 90, 124); font-size: 18px">Blog</div>
               </template>
             </el-menu-item>
@@ -49,9 +49,7 @@ export default {
         </el-main>
         <el-footer>
           <el-divider content-position="center">
-            <div style="color: rgb(207, 15, 124); font-size: 16px">
-              Copyright © 2023-2024
-            </div>
+            <div style="color: rgb(207, 15, 124); font-size: 16px">Copyright © 2023-2024</div>
           </el-divider>
           <el-divider content-position="center">
             <div style="color: rgb(207, 15, 124); font-size: 14px">
@@ -65,24 +63,28 @@ export default {
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { RouterLink, RouterView, useRoute, useRouter } from "vue-router";
+import { ref } from 'vue'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
-const [_, router] = [useRoute(), useRouter()];
+const [_, router] = [useRoute(), useRouter()]
 const blogList = ref<any[]>([
   {
-    label: "文章列表",
-    path: "home",
+    label: '文章列表',
+    path: 'home'
   },
   {
-    label: "编辑文章",
-    path: "edit",
+    label: '编辑文章',
+    path: 'edit'
   },
-]);
-const keyword = ref("");
+  {
+    label: '移动端',
+    path: 'phone'
+  }
+])
+const keyword = ref('')
 function handleOpen(item) {
-  router.push(item.path);
-  console.log("item", item);
+  router.push(item.path)
+  console.log('item', item)
 }
 </script>
 

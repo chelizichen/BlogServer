@@ -11,12 +11,29 @@ const router = createRouter({
     {
       path: '/edit',
       name: 'edit',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/Edit.vue')
+    },
+    {
+      path: '/phone',
+      name: 'phone',
+      component: () => import('../views/Phone.vue')
+    },
+    {
+      path: '/Detail',
+      name: 'detail',
+      component: () => import('../views/Detail.vue')
     }
   ]
 })
+
+// router.beforeEach((to,from,next)=>{
+//   const IsApp = isApp()
+//   console.log('isApp',IsApp);
+//   if(!IsApp){
+//     next(to)
+//   }else{
+//     next('/app')
+//   }
+// })
 
 export default router
