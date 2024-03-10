@@ -3,6 +3,7 @@ package service
 import (
 	"Simp/servers/BlogServer/configuration"
 	"Simp/servers/BlogServer/storage"
+	"Simp/servers/BlogServer/utils"
 	handlers "Simp/src/http"
 	"fmt"
 	"os"
@@ -56,12 +57,8 @@ func BlogService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	})
 
 	G.GET("/getArticleList", func(c *gin.Context) {
-		size := c.DefaultQuery("size", "10")
-		offset := c.DefaultQuery("offset", "0")
-		keyword := c.DefaultQuery("keyword", "")
-		SIZE, _ := strconv.Atoi(size)
-		OFFSET, _ := strconv.Atoi(offset)
-		resp := storage.GetArticleList(OFFSET, SIZE, keyword)
+		pagination := utils.NewPagination(c)
+		resp := storage.GetArticleList(pagination.Offset, pagination.Size, pagination.Keyword)
 		// fmt.Println("list", list.Scan())
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", resp))
 	})
