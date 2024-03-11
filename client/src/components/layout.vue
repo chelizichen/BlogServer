@@ -79,6 +79,10 @@ const blogList = ref<any[]>([
   {
     label: '移动端',
     path: 'phone'
+  },
+  {
+    label:"图片审核",
+    path:"pics"
   }
 ])
 const keyword = ref('')

@@ -32,3 +32,11 @@ export function delArticle(params: any) {
     params
   }) as unknown as Promise<BasicResp<any>>
 }
+
+export function getPics(params: any) {
+  return request({
+    method: 'get',
+    url: 'getPics',
+    params
+  }) as unknown as Promise<BasicResp<any>>
+}
