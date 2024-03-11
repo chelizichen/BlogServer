@@ -7,7 +7,10 @@ import (
 
 func main() {
 	ctx := h.NewSimpHttpCtx("simp.yaml")
-	ctx.Use(service.BlogService)
+	ctx.Use(service.InitService)
+	ctx.Use(service.ArticleService)
+	ctx.Use(service.ColumnsService)
+	ctx.Use(service.ImgService)
 	ctx.UseSPA("/web", "dist")
 	ctx.Static("/imgs", "imgs")
 

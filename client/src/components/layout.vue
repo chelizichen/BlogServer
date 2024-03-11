@@ -69,6 +69,14 @@ import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 const [_, router] = [useRoute(), useRouter()]
 const blogList = ref<any[]>([
   {
+    label: '专栏列表',
+    path: 'columns'
+  },
+  {
+    label: '编辑专栏',
+    path: 'edit_column'
+  },
+  {
     label: '文章列表',
     path: 'home'
   },
@@ -81,8 +89,8 @@ const blogList = ref<any[]>([
     path: 'phone'
   },
   {
-    label:"图片审核",
-    path:"pics"
+    label: '图片审核',
+    path: 'pics'
   }
 ])
 const keyword = ref('')

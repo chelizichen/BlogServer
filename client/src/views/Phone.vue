@@ -7,9 +7,9 @@ export default {
 .container {
   padding: 10px;
 }
-.container >>> img{
-    width: 100%;
-    height: 100%;
+.container >>> img {
+  width: 100%;
+  height: 100%;
 }
 .card {
   margin-bottom: 20px;
@@ -22,7 +22,10 @@ export default {
   <div class="container">
     <el-card class="card" v-for="item in articleList" :key="item.id">
       <template #header
-        ><b @click="toDetail(item)">{{ item.title }}</b><div style="float: right;font-size: 12px;">{{ moment(item.create_time).format("YYYYMMDD HH:mm:ss") }}</div></template
+        ><b @click="toDetail(item)">{{ item.title }}</b>
+        <div style="float: right; font-size: 12px">
+          {{ moment(item.create_time).format('YYYYMMDD HH:mm:ss') }}
+        </div></template
       >
       <div v-html="item.content" class="content"></div>
     </el-card>

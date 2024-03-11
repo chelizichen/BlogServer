@@ -6,12 +6,12 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../views/Home.vue')
+      component: () => import('../views/Article/Home.vue')
     },
     {
       path: '/edit',
       name: 'edit',
-      component: () => import('../views/Edit.vue')
+      component: () => import('../views/Article/Edit.vue')
     },
     {
       path: '/phone',
@@ -27,7 +27,17 @@ const router = createRouter({
       path: '/Pics',
       name: 'pics',
       component: () => import('../views/Pics.vue')
-    }
+    },
+    {
+      path: '/columns',
+      name: 'columns',
+      component: () => import('../views/Column/Columns.vue')
+    },
+    {
+      path: '/edit_column',
+      name: 'edit_column',
+      component: () => import('../views/Column/Edit.vue')
+    },
   ]
 })
 

@@ -10,21 +10,6 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-type User struct {
-	ID         uint
-	Name       string
-	Password   string
-	CreateTime time.Time
-}
-
-type Article struct {
-	ID         uint       `json:"id,omitempty"`
-	Title      string     `json:"title,omitempty"`
-	CreateTime *time.Time `json:"create_time,omitempty" gorm:"autoCreateTime"`
-	Content    string     `json:"content,omitempty"`
-	Type       *int       `json:"type,omitempty" gorm:"default:0"`
-}
-
 var GORM *gorm.DB
 
 func InitStorage(ctx http.SimpHttpServerCtx) {
@@ -47,5 +32,6 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 	sqlDB.SetConnMaxLifetime(time.Hour)
 	db.Debug().AutoMigrate(&User{})
 	db.Debug().AutoMigrate(&Article{})
+	db.Debug().AutoMigrate(&Column{})
 	GORM = db
 }

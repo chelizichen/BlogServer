@@ -34,16 +34,16 @@ import { onMounted, ref } from 'vue'
 import moment from 'moment'
 import router from '@/router'
 
-const Types:Record<string,string> = {
-  "0":"正常",
-  "-1":"已删除"
+const Types: Record<string, string> = {
+  '0': '正常',
+  '-1': '已删除'
 }
 
 onMounted(async () => {
   const data = await getArticleList(params.value)
-  articleList.value = data.Data.list.map((v:any)=>{
+  articleList.value = data.Data.list.map((v: any) => {
     v.type = Types[v.type]
-    return v;
+    return v
   })
   total.value = data.Data.total
 })

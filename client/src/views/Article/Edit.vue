@@ -48,7 +48,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { getArticle, saveArticle } from '@/api/article'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
-import {  hashBinary  } from 'spark-md5'
+import { hashBinary } from 'spark-md5'
 import { md5 } from 'js-md5'
 
 const [route, router] = [useRoute(), useRouter()]
@@ -88,8 +88,8 @@ const editorConfig = {
       server: '/blogserver/blogImg',
       // file 文件的字段名
       fieldName: 'file',
-      maxFileSize: 2 * 1024 * 1024,
-    },
+      maxFileSize: 2 * 1024 * 1024
+    }
   }
 }
 

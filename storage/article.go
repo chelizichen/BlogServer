@@ -20,9 +20,11 @@ func SaveArticle(article c.Article) int64 {
 		r := c.GORM.Debug().
 			Model(&article).
 			Select("content", "title").
+			Where("id = ?", article.ID).
 			Updates(&c.Article{
-				Content: article.Content,
-				Title:   article.Title,
+				Content:  article.Content,
+				Title:    article.Title,
+				ColumnId: article.ColumnId,
 			})
 		return r.RowsAffected
 	}
