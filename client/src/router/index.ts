@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../views/Article/Home.vue')
+      component: () => import('../views/Article/List.vue')
     },
     {
       path: '/edit',
@@ -31,7 +31,7 @@ const router = createRouter({
     {
       path: '/columns',
       name: 'columns',
-      component: () => import('../views/Column/Columns.vue')
+      component: () => import('../views/Column/List.vue')
     },
     {
       path: '/edit_column',
