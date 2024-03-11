@@ -28,7 +28,7 @@ export default {
 
 <script setup lang="ts">
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import {  onMounted, reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { saveColumn } from '@/api/column'
 
@@ -36,7 +36,7 @@ const [route, router] = [useRoute(), useRouter()]
 
 const form = reactive({
   title: '',
-  desc:'',
+  desc: ''
 })
 async function GetById() {
   const id = route.query.id
@@ -49,12 +49,10 @@ async function GetById() {
 onMounted(async () => {
   await GetById()
   // setTimeout(() => {
-
 })
 
-async function onSubmit(){
-    const body = form
-    const data = await saveColumn(body)
+async function onSubmit() {
+  const body = form
+  const data = await saveColumn(body)
 }
-
 </script>

@@ -37,7 +37,7 @@ const router = createRouter({
       path: '/edit_column',
       name: 'edit_column',
       component: () => import('../views/Column/Edit.vue')
-    },
+    }
   ]
 })
 

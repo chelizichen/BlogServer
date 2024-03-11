@@ -17,10 +17,19 @@ export function getColumnDetail(params: { id: string }) {
   }) as unknown as Promise<BasicResp<any>>
 }
 
-export function saveColumn(data:any) {
+export function saveColumn(data: any) {
   return request({
     method: 'post',
     url: 'saveColumn',
     data
+  }) as unknown as Promise<BasicResp<any>>
+}
+
+
+export function saveArticleInColumn(params: any) {
+  return request({
+    method: 'get',
+    url: 'saveArticleInColumn',
+    params
   }) as unknown as Promise<BasicResp<any>>
 }

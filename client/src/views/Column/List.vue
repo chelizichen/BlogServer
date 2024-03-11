@@ -3,15 +3,11 @@
     <el-table :data="list" style="width: 100%" border>
       <el-table-column type="index" width="90" label="序号" align="center" />
       <el-table-column prop="column.id" label="标识" align="center" />
-      <el-table-column prop="column.title" label="标题" align="center"/>
-      <el-table-column prop="column.desc" label="描述" align="center"/>
-      <el-table-column prop="article_len" label="文章总数" align="center"/>
-      <!-- <el-table-column prop="desc" label="预览" align="center">
-        <template #default="scoped">
-          <img :src="scoped.row.path" style="height: 200px; width: 100%" />
-        </template>
-      </el-table-column> -->
-      <el-table-column label="操作" width="180" align="center"> </el-table-column>
+      <el-table-column prop="column.title" label="标题" align="center" />
+      <el-table-column prop="column.desc" label="描述" align="center" />
+      <el-table-column prop="article_len" label="文章总数" align="center" />
+      <el-table-column label="操作" width="180" align="center">
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -29,6 +25,7 @@ const params = ref({
   keyword: "",
 });
 const list = ref();
+
 </script>
 
 <style scoped></style>
