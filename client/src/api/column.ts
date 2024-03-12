@@ -25,7 +25,6 @@ export function saveColumn(data: any) {
   }) as unknown as Promise<BasicResp<any>>
 }
 
-
 export function saveArticleInColumn(params: any) {
   return request({
     method: 'get',

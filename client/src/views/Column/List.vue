@@ -6,26 +6,24 @@
       <el-table-column prop="column.title" label="标题" align="center" />
       <el-table-column prop="column.desc" label="描述" align="center" />
       <el-table-column prop="article_len" label="文章总数" align="center" />
-      <el-table-column label="操作" width="180" align="center">
-      </el-table-column>
+      <el-table-column label="操作" width="180" align="center"> </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getColumns } from "@/api/column";
-import { onMounted, ref } from "vue";
+import { getColumns } from '@/api/column'
+import { onMounted, ref } from 'vue'
 onMounted(async () => {
-  const data = await getColumns(params.value);
-  list.value = data.Data.list;
-});
+  const data = await getColumns(params.value)
+  list.value = data.Data.list
+})
 const params = ref({
   offset: 0,
   size: 10,
-  keyword: "",
-});
-const list = ref();
-
+  keyword: ''
+})
+const list = ref()
 </script>
 
 <style scoped></style>

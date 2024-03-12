@@ -10,13 +10,6 @@ onMounted(() => {
   if (!IsPhone.value) {
     return
   }
-  const whiteList = ['/phone', '/detail']
-  const matchedNext = route.matched.map((v) => v.path)
-  console.log('matchs', matchedNext)
-
-  if (matchedNext.every((v) => whiteList.findIndex((e) => e === v) == -1)) {
-    router.push('/phone')
-  }
 })
 </script>
 

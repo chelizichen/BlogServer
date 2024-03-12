@@ -27,13 +27,20 @@ export default {
       </el-table-column>
     </el-table>
   </div>
-  <el-dialog v-model="centerDialogVisible" :title="`选择专栏 [${get(currentRow,'column.title') || ''}]`" width="80%" center>
-    <el-table :data="chooseColumnList"
-     style="width: 100%" 
-     border highlight-current-row
-     @current-change="handleCurrentChange"
-     ref="singleTableRef"
-     >
+  <el-dialog
+    v-model="centerDialogVisible"
+    :title="`选择专栏 [${get(currentRow, 'column.title') || ''}]`"
+    width="80%"
+    center
+  >
+    <el-table
+      :data="chooseColumnList"
+      style="width: 100%"
+      border
+      highlight-current-row
+      @current-change="handleCurrentChange"
+      ref="singleTableRef"
+    >
       <el-table-column prop="column.id" label="标识" align="center" />
       <el-table-column prop="column.title" label="标题" align="center" />
       <el-table-column prop="column.desc" label="描述" align="center" />
@@ -42,9 +49,7 @@ export default {
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="centerDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitSaveIntoColumn">
-          确定
-        </el-button>
+        <el-button type="primary" @click="submitSaveIntoColumn"> 确定 </el-button>
       </div>
     </template>
   </el-dialog>
@@ -55,7 +60,7 @@ import { getArticleList } from '@/api/article'
 import { onMounted, ref } from 'vue'
 import moment from 'moment'
 import router from '@/router'
-import { getColumns,saveArticleInColumn } from '@/api/column'
+import { getColumns, saveArticleInColumn } from '@/api/column'
 import { ElTable } from 'element-plus'
 import { get } from 'lodash'
 const Types: Record<string, string> = {
@@ -91,35 +96,34 @@ function Edit(item) {
 const singleTableRef = ref<InstanceType<typeof ElTable>>()
 
 const setCurrent = (row) => {
-  console.log('row',row);
+  console.log('row', row)
   singleTableRef.value!.setCurrentRow(row)
 }
 
 const chooseId = ref(0)
 const chooseColumnList = ref([])
-const centerDialogVisible = ref(false);
+const centerDialogVisible = ref(false)
 async function chooseColumn(row) {
   chooseId.value = row.id
   centerDialogVisible.value = true
-  const data = await getColumns(params.value);
-  const cRow = data.Data.list.find(v=>v.column.id == row.column_id)
+  const data = await getColumns(params.value)
+  const cRow = data.Data.list.find((v) => v.column.id == row.column_id)
   setCurrent(cRow)
-  chooseColumnList.value = data.Data.list;
+  chooseColumnList.value = data.Data.list
 }
-const currentRow = ref({column:{}})
+const currentRow = ref({ column: {} })
 const handleCurrentChange = (val) => {
   currentRow.value = val
 }
 
 async function submitSaveIntoColumn() {
   const body = {
-    id:chooseId.value,
-    cid:currentRow.value.column.id,
+    id: chooseId.value,
+    cid: currentRow.value.column.id
   }
   const data = await saveArticleInColumn(body)
   centerDialogVisible.value = false
 }
-
 </script>
 
 <style scoped></style>
