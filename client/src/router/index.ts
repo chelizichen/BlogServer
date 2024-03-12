@@ -37,6 +37,11 @@ const router = createRouter({
       path: '/edit_column',
       name: 'edit_column',
       component: () => import('../views/Column/Edit.vue')
+    },
+    {
+      path: '/app_column',
+      name: 'app_column',
+      component: () => import('../views/Column/App.vue')
     }
   ]
 })

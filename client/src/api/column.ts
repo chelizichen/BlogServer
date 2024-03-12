@@ -12,7 +12,7 @@ export function getColumns(params: any) {
 export function getColumnDetail(params: { id: string }) {
   return request({
     method: 'get',
-    url: 'getColumns',
+    url: 'getColumnDetail',
     params
   }) as unknown as Promise<BasicResp<any>>
 }
