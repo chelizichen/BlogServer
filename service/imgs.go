@@ -3,6 +3,7 @@ package service
 import (
 	"Simp/servers/BlogServer/utils"
 	handlers "Simp/src/http"
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -54,5 +55,17 @@ func ImgService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		c.AbortWithStatusJSON(0, handlers.Resp(0, "ok", pics))
 	})
 
+	G.GET("/delPic", func(c *gin.Context) {
+		s := c.Query("imgPath")
+		fmt.Println("s", s)
+		path := utils.JoinPathUtil("./imgs/", s)
+
+		err := os.Remove(path)
+		if err != nil {
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, err.Error(), nil))
+			return
+		}
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", nil))
+	})
 	E.Use(G.Handlers...)
 }

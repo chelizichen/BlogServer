@@ -9,7 +9,11 @@ export default {
       <el-table-column type="index" width="90" label="序号" align="center" />
       <el-table-column prop="id" label="编号" width="90" align="center" />
       <el-table-column prop="title" label="标题" width="180" align="center" />
-      <el-table-column prop="content" label="内容" align="center" />
+      <el-table-column label="内容" align="center">
+        <template #default="scoped">
+          <div class="imgs" style="height:32px;overflow:hidden" v-html="scoped.row.content"></div>
+        </template>
+      </el-table-column>
       <el-table-column prop="type" label="类型" align="center" />
       <el-table-column prop="create_time" label="创建时间" width="180" align="center">
         <template #default="scoped">
@@ -126,4 +130,8 @@ async function submitSaveIntoColumn() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.imgs >>> img{
+  display: none;
+}
+</style>

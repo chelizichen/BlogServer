@@ -40,3 +40,11 @@ export function getPics(params: any) {
     params
   }) as unknown as Promise<BasicResp<any>>
 }
+
+export function delPic(params:any){
+  return request({
+    method: 'get',
+    url: 'delPic',
+    params
+  }) as unknown as Promise<BasicResp<any>>
+}
