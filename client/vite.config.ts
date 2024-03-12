@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
-
+import { chunkSplitPlugin } from 'vite-plugin-chunk-split';
 import { defineConfig,loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -10,6 +10,13 @@ export default defineConfig(({mode})=>{
   return {
   plugins: [
     vue(),
+    chunkSplitPlugin({
+      strategy:"default",
+      customSplitting:{
+        "wangeditor-chunk":[/wangeditor/,/@wangeditor\/editor/,/@wangeditor\/editor-for-vue/],
+        "elements":[/element-plus/,/@element-plus\/icons-vue/],
+      }
+    })
   ],
   resolve: {
     alias: {
@@ -25,5 +32,15 @@ export default defineConfig(({mode})=>{
         rewrite: (path) => path.replace(/^\/blogserver/, '/blogserver/') // 不可以省略rewrite
       }
     }
+  },
+  build:{
+    // rollupOptions:{
+    //   output:{
+    //     manualChunks:{
+    //       "lodash-chunk":["lodash"],
+    //       "wangeditor-chunk":["wangeditor","@wangeditor/editor","@wangeditor/editor-for-vue"]
+    //     }
+    //   }
+    // }
   }
 }})
