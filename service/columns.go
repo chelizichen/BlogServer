@@ -1,7 +1,7 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/configuration"
+	"Simp/servers/BlogServer/obj/dao"
 	"Simp/servers/BlogServer/storage"
 	"Simp/servers/BlogServer/utils"
 	handlers "Simp/src/http"
@@ -34,7 +34,7 @@ func ColumnsService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	})
 
 	G.POST("/saveColumn", func(c *gin.Context) {
-		var column *configuration.Column
+		var column *dao.Column
 		c.BindJSON(&column)
 		res := storage.SaveColumn(*column)
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", res))

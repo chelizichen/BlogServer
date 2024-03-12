@@ -1,4 +1,4 @@
-package configuration
+package dao
 
 import "time"
 
@@ -9,11 +9,6 @@ type User struct {
 	CreateTime time.Time
 }
 
-type ColumnDetail struct {
-	Column     Column `json:"column"`
-	ArticleLen int    `json:"article_len"`
-}
-
 // 专栏
 type Column struct {
 	Id         uint       `json:"id,omitempty"`
@@ -22,6 +17,8 @@ type Column struct {
 	CreateTime *time.Time `json:"create_time,omitempty" gorm:"autoCreateTime"`
 	UpdateTime *time.Time `json:"update_time,omitempty" gorm:"autoCreateTime"`
 	UserId     *uint      `json:"user_id,omitempty" gorm:"default:0"`
+	Status     *int       `json:"status,omitempty" gorm:"default:0"`
+	Weight     *int       `json:"weight,omitempty" gorm:"default:0"`
 	Articles   []Article  `json:"articles,omitempty" gorm:"foreignKey:column_id"`
 }
 

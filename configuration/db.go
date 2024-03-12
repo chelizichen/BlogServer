@@ -1,6 +1,7 @@
 package configuration
 
 import (
+	"Simp/servers/BlogServer/obj/dao"
 	"Simp/src/http"
 	"fmt"
 	"time"
@@ -30,8 +31,8 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
-	db.Debug().AutoMigrate(&User{})
-	db.Debug().AutoMigrate(&Article{})
-	db.Debug().AutoMigrate(&Column{})
+	db.Debug().AutoMigrate(&dao.User{})
+	db.Debug().AutoMigrate(&dao.Article{})
+	db.Debug().AutoMigrate(&dao.Column{})
 	GORM = db
 }

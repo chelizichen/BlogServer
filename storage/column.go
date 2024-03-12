@@ -2,6 +2,8 @@ package storage
 
 import (
 	c "Simp/servers/BlogServer/configuration"
+	"Simp/servers/BlogServer/obj/dao"
+	"Simp/servers/BlogServer/obj/vo"
 	"Simp/servers/BlogServer/utils"
 	"fmt"
 )
@@ -16,8 +18,8 @@ func GetColumnList(pagination utils.Pagination) map[string]interface{} {
 	// 	Column        c.Column
 	// 	NumOfArticles int
 	// }
-	var columnResp []*c.ColumnDetail
-	var columnList []c.Column
+	var columnResp []*vo.ColumnDetail
+	var columnList []dao.Column
 	var total int64
 	c.GORM.Model(columnList).
 		Where("title like ?", "%"+pagination.Keyword+"%").
@@ -28,7 +30,7 @@ func GetColumnList(pagination utils.Pagination) map[string]interface{} {
 	ids := make([]uint, 0)
 	for _, v := range columnList {
 		Val := v
-		columnResp = append(columnResp, &c.ColumnDetail{
+		columnResp = append(columnResp, &vo.ColumnDetail{
 			Column:     Val,
 			ArticleLen: 0,
 		})
@@ -60,34 +62,34 @@ GROUP BY
 	return resp
 }
 
-func GetColumnDetail(columnID int) (column *c.Column) {
-	var articles []c.Article
+func GetColumnDetail(columnID int) (column *dao.Column) {
+	var articles []dao.Article
 
 	// 通过 Column ID 查询对应的 Article
 	c.GORM.Preload("Articles").Where("id = ?", columnID).First(&column)
 
 	// 遍历 Column 下的所有 Article，并提取其 ID
 	for _, article := range column.Articles {
-		articles = append(articles, c.Article{ID: article.ID, Title: article.Title})
+		articles = append(articles, dao.Article{ID: article.ID, Title: article.Title})
 	}
 	column.Articles = articles
 	return column
 }
 
-func SaveColumn(column c.Column) int64 {
+func SaveColumn(column dao.Column) int64 {
 	r := c.GORM.Create(&column)
 	return (r.RowsAffected)
 }
 
 func SaveArticleInColumn(id, cid int) int64 {
-	v := &c.Article{
+	v := &dao.Article{
 		ColumnId: &cid,
 	}
 	r := c.GORM.Debug().
 		Model(&v).
 		Select("column_id").
 		Where("id = ?", id).
-		Updates(&c.Article{
+		Updates(&dao.Article{
 			ColumnId: v.ColumnId,
 		})
 	return r.RowsAffected

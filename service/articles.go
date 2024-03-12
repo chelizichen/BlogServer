@@ -1,7 +1,7 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/configuration"
+	"Simp/servers/BlogServer/obj/dao"
 	"Simp/servers/BlogServer/storage"
 	"Simp/servers/BlogServer/utils"
 	handlers "Simp/src/http"
@@ -22,7 +22,7 @@ func ArticleService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	})
 
 	G.POST("/saveArticle", func(c *gin.Context) {
-		var article *configuration.Article
+		var article *dao.Article
 		c.BindJSON(&article)
 		fmt.Println("article", article.ID)
 		r := storage.SaveArticle(*article)

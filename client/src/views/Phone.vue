@@ -27,7 +27,7 @@ export default {
           {{ moment(item.create_time).format('YYYYMMDD HH:mm:ss') }}
         </div></template
       >
-      <div v-html="item.content" class="content"></div>
+      <div v-code v-html="item.content" class="content"></div>
     </el-card>
   </div>
 </template>
