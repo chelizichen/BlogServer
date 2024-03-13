@@ -32,3 +32,11 @@ export function saveArticleInColumn(params: any) {
     params
   }) as unknown as Promise<BasicResp<any>>
 }
+
+export function delColumnById(params: any) {
+  return request({
+    method: 'get',
+    url: 'delColumnById',
+    params
+  }) as unknown as Promise<BasicResp<any>>
+}

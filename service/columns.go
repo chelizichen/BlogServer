@@ -39,5 +39,11 @@ func ColumnsService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		res := storage.SaveColumn(*column)
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", res))
 	})
+
+	G.GET("/delColumnById", func(c *gin.Context) {
+		id, _ := strconv.Atoi(c.Query("id"))
+		i := storage.DeleteColumnById(id)
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", i))
+	})
 	E.Use(G.Handlers...)
 }

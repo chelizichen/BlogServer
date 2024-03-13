@@ -19,6 +19,7 @@ type Column struct {
 	UserId     *uint      `json:"user_id,omitempty" gorm:"default:0"`
 	Status     *int       `json:"status,omitempty" gorm:"default:0"`
 	Weight     *int       `json:"weight,omitempty" gorm:"default:0"`
+	Type       *int       `json:"type,omitempty" gorm:"default:0"`
 	Articles   []Article  `json:"articles,omitempty" gorm:"foreignKey:column_id"`
 }
 

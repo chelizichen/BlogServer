@@ -22,7 +22,7 @@ func GetColumnList(pagination utils.Pagination) map[string]interface{} {
 	var columnList []dao.Column
 	var total int64
 	c.GORM.Model(columnList).
-		Where("title like ?", "%"+pagination.Keyword+"%").
+		Where("title like ? and type != ? ", "%"+pagination.Keyword+"%", -1).
 		Count(&total).Limit(pagination.Size).
 		Offset(pagination.Offset).
 		Find(&columnList)
@@ -93,4 +93,12 @@ func SaveArticleInColumn(id, cid int) int64 {
 			ColumnId: v.ColumnId,
 		})
 	return r.RowsAffected
+}
+
+func DeleteColumnById(id int) int64 {
+	t := -1
+	d := c.GORM.Model(&dao.Column{}).Select("type").Where("id = ?", id).Updates(&dao.Column{
+		Type: &t,
+	})
+	return d.RowsAffected
 }
