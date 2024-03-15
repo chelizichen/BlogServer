@@ -30,6 +30,11 @@ export default defineConfig(({mode})=>{
         target: 'http://localhost:8514/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/blogserver/, '/blogserver/') // 不可以省略rewrite
+      },
+      "/ltsnodeserver":{
+        target: 'http://localhost:8517/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/ltsnodeserver/, '/ltsnodeserver/') // 不可以省略rewrite
       }
     }
   },

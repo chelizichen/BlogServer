@@ -1,49 +1,63 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+export const routes = [
+  {
+    path: '/home',
+    name: '文章列表',
+    component: () => import('../views/Article/List.vue')
+  },
+  {
+    path: '/edit',
+    name: '编辑文章',
+    component: () => import('../views/Article/Edit.vue')
+  },
+  {
+    path: '/Pics',
+    name: '图片审核',
+    component: () => import('../views/Pics.vue')
+  },
+  {
+    path: '/columns',
+    name: '专栏列表',
+    component: () => import('../views/Column/List.vue')
+  },
+  {
+    path: '/edit_column',
+    name: '编辑专栏',
+    component: () => import('../views/Column/Edit.vue')
+  },
+  {
+    path: '/effs',
+    name: '事件列表',
+    component: () => import('../views/Events/List.vue')
+  },
+  {
+    path: '/create_event',
+    name: '创建事件',
+    component: () => import('../views/Events/Edit.vue')
+  },
+  {
+    path: '/phone',
+    name: '移动端',
+    component: () => import('../views/Phone.vue')
+  },
+  {
+    path: '/Detail',
+    name: 'detail',
+    component: () => import('../views/Detail.vue'),
+    show: false
+  },
+  {
+    path: '/app_column',
+    name: 'app_column',
+    component: () => import('../views/Column/App.vue'),
+    show: false
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('../views/Article/List.vue')
-    },
-    {
-      path: '/edit',
-      name: 'edit',
-      component: () => import('../views/Article/Edit.vue')
-    },
-    {
-      path: '/phone',
-      name: 'phone',
-      component: () => import('../views/Phone.vue')
-    },
-    {
-      path: '/Detail',
-      name: 'detail',
-      component: () => import('../views/Detail.vue')
-    },
-    {
-      path: '/Pics',
-      name: 'pics',
-      component: () => import('../views/Pics.vue')
-    },
-    {
-      path: '/columns',
-      name: 'columns',
-      component: () => import('../views/Column/List.vue')
-    },
-    {
-      path: '/edit_column',
-      name: 'edit_column',
-      component: () => import('../views/Column/Edit.vue')
-    },
-    {
-      path: '/app_column',
-      name: 'app_column',
-      component: () => import('../views/Column/App.vue')
-    }
-  ]
+  routes
 })
 
 // router.beforeEach((to,from,next)=>{

@@ -41,7 +41,7 @@ export function getPics(params: any) {
   }) as unknown as Promise<BasicResp<any>>
 }
 
-export function delPic(params:any){
+export function delPic(params: any) {
   return request({
     method: 'get',
     url: 'delPic',

@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
-  name: "home-component",
-};
+  name: 'home-component'
+}
 </script>
 <template>
   <div>
@@ -23,43 +23,44 @@ export default {
 </template>
 
 <script setup lang="ts">
-import { getArticleList, getPics, delPic } from "@/api/article";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { onMounted, ref } from "vue";
+import { getArticleList, getPics, delPic } from '@/api/article'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { onMounted, ref } from 'vue'
 
 onMounted(async () => {
-  const data = await getPics(params.value);
-  list.value = data.Data;
-});
+  const data = await getPics(params.value)
+  list.value = data.Data
+})
 const params = ref({
   offset: 0,
   size: 10,
-  keyword: "",
-});
-const list = ref();
+  keyword: ''
+})
+const list = ref()
 
 function deletePic(row: any) {
-  ElMessageBox.prompt("Are you sure to delete this img", "Confirm", {
-    confirmButtonText: "OK",
-    cancelButtonText: "Cancel",
-    inputPlaceholder: "input password",
-  }).then(async ({ value }) => {
-    if (value != "0504") {
-      return false;
-    }
-    const name = row.name;
-    delPic({ imgPath: name });
-    ElMessage({
+  ElMessageBox.prompt('Are you sure to delete this img', 'Confirm', {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    inputPlaceholder: 'input password'
+  })
+    .then(async ({ value }) => {
+      if (value != '0504') {
+        return false
+      }
+      const name = row.name
+      delPic({ imgPath: name })
+      ElMessage({
         type: 'success',
         message: `Delete Success`
       })
-  
-  }).catch(()=>{
-    ElMessage({
-      type: 'info',
-      message: 'Delete canceled'
     })
-  });
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled'
+      })
+    })
 }
 </script>
 

@@ -39,7 +39,13 @@ export default {
 <template>
   <div class="container">
     <div class="carousel">
-      <el-carousel :interval="2000" type="card" height="10vh" indicator-position="none" arrow="always">
+      <el-carousel
+        :interval="2000"
+        type="card"
+        height="10vh"
+        indicator-position="none"
+        arrow="always"
+      >
         <el-carousel-item v-for="item in columnsList" :key="item">
           <h3 text="2xl" justify="center" @click="toAppColumn(item)">{{ item.column.title }}</h3>
         </el-carousel-item>

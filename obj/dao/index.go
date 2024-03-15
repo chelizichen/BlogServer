@@ -7,6 +7,7 @@ type User struct {
 	Name       string
 	Password   string
 	CreateTime time.Time
+	Level      int
 }
 
 // 专栏

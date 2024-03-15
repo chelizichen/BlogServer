@@ -11,7 +11,11 @@ export default {
       <el-table-column prop="title" label="标题" width="180" align="center" />
       <el-table-column label="内容" align="center">
         <template #default="scoped">
-          <div class="imgs" style="height:32px;overflow:hidden" v-html="scoped.row.content"></div>
+          <div
+            class="imgs"
+            style="height: 32px; overflow: hidden"
+            v-html="scoped.row.content"
+          ></div>
         </template>
       </el-table-column>
       <el-table-column prop="type" label="类型" align="center" />
@@ -131,7 +135,7 @@ async function submitSaveIntoColumn() {
 </script>
 
 <style scoped>
-.imgs >>> img{
+.imgs >>> img {
   display: none;
 }
 </style>

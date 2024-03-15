@@ -23,16 +23,17 @@ export default {
                 <div style="color: rgb(207, 90, 124); font-size: 18px">Blog</div>
               </template>
             </el-menu-item>
-            <el-menu-item
-              v-for="(item, index) in blogList"
-              class="app-text-center"
-              :index="item"
-              :key="index"
-              @click="handleOpen(item)"
-            >
-              <el-icon class="app-not-show"><Menu /></el-icon>
-              <template #title>{{ item.label }}</template>
-            </el-menu-item>
+            <template v-for="(item, index) in routes" :key="index">
+              <el-menu-item
+                class="app-text-center"
+                :index="item"
+                @click="handleOpen(item)"
+                v-if="item.show !== false"
+              >
+                <el-icon class="app-not-show"><Menu /></el-icon>
+                <template #title>{{ item.name }}</template>
+              </el-menu-item>
+            </template>
           </el-menu>
         </el-card>
       </el-aside>
@@ -63,36 +64,11 @@ export default {
 </template>
 
 <script setup lang="ts">
+import { routes } from '@/router'
 import { ref } from 'vue'
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 
 const [_, router] = [useRoute(), useRouter()]
-const blogList = ref<any[]>([
-  {
-    label: '专栏列表',
-    path: 'columns'
-  },
-  {
-    label: '编辑专栏',
-    path: 'edit_column'
-  },
-  {
-    label: '文章列表',
-    path: 'home'
-  },
-  {
-    label: '编辑文章',
-    path: 'edit'
-  },
-  {
-    label: '移动端',
-    path: 'phone'
-  },
-  {
-    label: '图片审核',
-    path: 'pics'
-  }
-])
 const keyword = ref('')
 function handleOpen(item) {
   router.push(item.path)
