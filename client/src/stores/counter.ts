@@ -11,3 +11,9 @@ export const useArticleStore = defineStore('article', () => {
 
   return { articleTitle, articleContent, setArticle }
 })
+
+export const useSearchStore = defineStore('search', () => {
+  const searchKeyword = ref('')
+  return { searchKeyword }
+})
+

@@ -9,7 +9,7 @@ import (
 func GetArticleList(offset int, size int, keyword string) map[string]interface{} {
 	var dataList []dao.Article
 	var total int64
-	c.GORM.Model(dataList).Where("title like ?", "%"+keyword+"%").Count(&total).Limit(20).Offset(offset).Find(&dataList)
+	c.GORM.Model(dataList).Where("title like ?", "%"+keyword+"%").Count(&total).Limit(size).Offset(offset).Find(&dataList)
 	resp := make(map[string]interface{})
 	resp["list"] = dataList
 	resp["total"] = total

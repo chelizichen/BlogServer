@@ -1,7 +1,7 @@
 <script lang="ts">
 export default {
-  name: 'layout-component'
-}
+  name: "layout-component",
+};
 </script>
 <template>
   <el-container>
@@ -18,7 +18,9 @@ export default {
             style="border: none"
           >
             <el-menu-item>
-              <el-icon style="color: rgb(207, 90, 124); font-size: 36px"><Help /></el-icon>
+              <el-icon style="color: rgb(207, 90, 124); font-size: 36px"
+                ><Help
+              /></el-icon>
               <template #title>
                 <div style="color: rgb(207, 90, 124); font-size: 18px">Blog</div>
               </template>
@@ -40,7 +42,7 @@ export default {
       <el-container>
         <el-header>
           <el-card>
-            <el-input v-model="keyword" style="width: 200px"></el-input>
+            <el-input v-model="search.searchKeyword" style="width: 200px"></el-input>
           </el-card>
         </el-header>
         <el-main>
@@ -50,7 +52,9 @@ export default {
         </el-main>
         <el-footer>
           <el-divider content-position="center">
-            <div style="color: rgb(207, 15, 124); font-size: 16px">Copyright © 2023-2024</div>
+            <div style="color: rgb(207, 15, 124); font-size: 16px">
+              Copyright © 2023-2024
+            </div>
           </el-divider>
           <el-divider content-position="center">
             <div style="color: rgb(207, 15, 124); font-size: 14px">
@@ -64,15 +68,15 @@ export default {
 </template>
 
 <script setup lang="ts">
-import { routes } from '@/router'
-import { ref } from 'vue'
-import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
+import { routes } from "@/router";
+import { useSearchStore } from "@/stores/counter";
+import { RouterView, useRoute, useRouter } from "vue-router";
 
-const [_, router] = [useRoute(), useRouter()]
-const keyword = ref('')
+const [_, router] = [useRoute(), useRouter()];
+const search = useSearchStore();
 function handleOpen(item) {
-  router.push(item.path)
-  console.log('item', item)
+  router.push(item.path);
+  console.log("item", item);
 }
 </script>
 
