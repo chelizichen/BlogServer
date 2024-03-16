@@ -16,3 +16,20 @@ export function saveEvent(data: any) {
     data
   }) as unknown as Promise<BasicResp<any>>
 }
+
+
+export function changeStatus(data: any) {
+  return request({
+    method: 'post',
+    url: 'changeStatus',
+    data
+  }) as unknown as Promise<BasicResp<any>>
+}
+
+export function getCommentsByEventId(params: any) {
+  return request({
+    method: 'get',
+    url: 'getCommentsByEventId',
+    params
+  }) as unknown as Promise<BasicResp<any>>
+}
