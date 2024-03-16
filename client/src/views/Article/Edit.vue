@@ -35,6 +35,13 @@ export default {
         >
       </el-form-item>
     </el-form>
+    <chooseColumnComponent
+      :chooseId="chooseId"
+      :chooseColumnList="chooseColumnList"
+      :centerDialogVisible="centerDialogVisible"
+      @closeDialogVisible="()=>centerDialogVisible = false"
+      ref="childComp"
+    ></chooseColumnComponent>
   </div>
 </template>
 
@@ -42,15 +49,17 @@ export default {
 
 <script setup lang="ts">
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { onBeforeUnmount, ref, shallowRef, onMounted, reactive } from 'vue'
+import { onBeforeUnmount, ref, shallowRef, onMounted, reactive, nextTick } from 'vue'
 // @ts-ignore
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { getArticle, saveArticle } from '@/api/article'
 import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
+import { getColumns } from '@/api/column'
+import chooseColumnComponent from './ChooseColumn.vue'
 
 const [route, router] = [useRoute(), useRouter()]
-
+const createId = ref()
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 const mode = 'simple'
@@ -118,6 +127,25 @@ const onSubmit = async () => {
     ElMessage.error(`error! ${resp.Message}`)
     return (loading.value = false)
   }
+  createId.value = resp.Data
+  chooseColumn()
   return (loading.value = false)
 }
+
+const params = ref({
+  offset: 0,
+  size: 10,
+  keyword: ''
+})
+const chooseId = ref(0)
+const chooseColumnList = ref([])
+const centerDialogVisible = ref(false)
+const childComp = ref<any>(null);
+async function chooseColumn() {
+  centerDialogVisible.value = true
+  chooseId.value = createId.value || route.query.id
+  const data = await getColumns(params.value)
+  chooseColumnList.value = data.Data.list
+}
+
 </script>

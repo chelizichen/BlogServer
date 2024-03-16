@@ -18,7 +18,7 @@ func GetArticleList(offset int, size int, keyword string) map[string]interface{}
 
 func SaveArticle(article dao.Article) int64 {
 	if article.ID != 0 {
-		r := c.GORM.Debug().
+		c.GORM.Debug().
 			Model(&article).
 			Select("content", "title").
 			Where("id = ?", article.ID).
@@ -27,11 +27,10 @@ func SaveArticle(article dao.Article) int64 {
 				Title:    article.Title,
 				ColumnId: article.ColumnId,
 			})
-		return r.RowsAffected
+		return int64(article.ID)
 	}
-	r := c.GORM.Create(&article)
-	i := r.RowsAffected
-	return i
+	c.GORM.Create(&article)
+	return int64(article.ID)
 }
 
 func GetArticle(id int) *dao.Article {
