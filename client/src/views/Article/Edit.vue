@@ -57,7 +57,7 @@ import { ElMessage } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
 import { getColumns } from "@/api/column";
 import chooseColumnComponent from "./ChooseColumn.vue";
-
+import { toolbarConfig, editorConfig } from "@/utils/editor";
 const [route, router] = [useRoute(), useRouter()];
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef();
@@ -85,19 +85,6 @@ onMounted(async () => {
   //   valueHtml.value = "<p>模拟 Ajax 异步设置内容</p>";
   // }, 1500);
 });
-
-const toolbarConfig = {};
-const editorConfig = {
-  placeholder: "请输入内容...",
-  MENU_CONF: {
-    uploadImage: {
-      server: "/blogserver/blogImg",
-      // file 文件的字段名
-      fieldName: "file",
-      maxFileSize: 2 * 1024 * 1024,
-    },
-  },
-};
 
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {

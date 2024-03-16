@@ -29,9 +29,9 @@ export default {
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog v-model="editDataVisible" title="状态流转" center>
+    <el-dialog v-model="editDataVisible" title="状态流转" center width="80%">
       <div style="display: flex">
-        <div style="flex:1;margin:0 10px">
+        <div style="flex: 1; margin: 0 10px">
           <el-form :model="editData" label-width="auto" style="max-width: 600px">
             <el-form-item label="流转状态">
               <el-select
@@ -62,15 +62,30 @@ export default {
               <el-input-number v-model="editData.realEventPay" />
             </el-form-item>
             <el-form-item label="评价">
-              <el-input v-model="editData.content" type="textarea" />
+              <div style="border: 1px solid #ccc">
+                <Toolbar
+                  style="border-bottom: 1px solid #ccc"
+                  :editor="editorRef"
+                  :defaultConfig="toolbarConfig"
+                  :mode="mode"
+                />
+                <Editor
+                  style="height: 300px; overflow-y: hidden"
+                  v-model="editData.content"
+                  :defaultConfig="editorConfig"
+                  :mode="mode"
+                  @onCreated="handleCreated"
+                />
+              </div>
+              <!-- <el-input v-model="editData.content" type="textarea" /> -->
             </el-form-item>
           </el-form>
         </div>
-        <div style="flex:1;margin:0 10px">
+        <div style="flex: 1; margin: 0 10px">
           <el-table :data="commentList" border style="width: 100%" height="250">
             <el-table-column prop="content" label="内容" width="180" />
             <el-table-column prop="createTime" label="创建时间" width="180" />
-            <el-table-column prop="status" label="状态" >
+            <el-table-column prop="status" label="状态">
               <template #default="scoped">
                 <div>{{ statusMap[scoped.row.status] || "其他" }}</div>
               </template>
@@ -98,8 +113,17 @@ import { changeStatus, getCommentsByEventId, getEvents } from "@/api/event";
 import { ElMessage, ElMessageBox, dayjs } from "element-plus";
 import { cloneDeep } from "lodash";
 import moment from "moment";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, shallowRef } from "vue";
+import { toolbarConfig, editorConfig } from "@/utils/editor";
+// @ts-ignore
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
+const mode = "simple";
+const editorRef = shallowRef();
+const handleCreated = (editor) => {
+  editorRef.value = editor; // 记录 editor 实例，重要！
+};
 const editData = ref();
 const editDataVisible = ref(false);
 const commentList = ref([
@@ -131,12 +155,13 @@ async function SubmitEditForm() {
     ElMessage.error(resp.Message);
     editDataVisible.value = false;
   }
+  ElMessage.success("评价成功");
   editDataVisible.value = false;
 }
 function EditForm(row) {
-  getCommentsByEventId({id:row.id}).then(res=>{
-    commentList.value = res.Data
-  })
+  getCommentsByEventId({ id: row.id }).then((res) => {
+    commentList.value = res.Data;
+  });
   editDataVisible.value = true;
   editData.value = cloneDeep(row);
   editData.value.status = String(editData.value.status);
