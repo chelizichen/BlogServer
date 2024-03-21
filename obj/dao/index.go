@@ -6,7 +6,7 @@ type User struct {
 	ID         uint
 	Name       string
 	Password   string
-	CreateTime time.Time
+	CreateTime time.Time `gorm:"autoCreateTime"`
 	Level      int
 }
 

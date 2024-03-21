@@ -52,6 +52,12 @@ export const routes = [
     name: 'app_column',
     component: () => import('../views/Column/App.vue'),
     show: false
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/Login/index.vue'),
+    show: false
   }
 ]
 
@@ -69,5 +75,19 @@ const router = createRouter({
 //     next('/app')
 //   }
 // })
+
+const whileList = ["/login"]
+
+router.beforeEach((to,from,next)=>{
+  console.log('to',to.path);
+  const tkn = localStorage.getItem("blog_server_token")
+  if(tkn || whileList.includes(to.path)){
+    next()
+  }else{
+    next({
+      path:"/login"
+    })
+  }
+})
 
 export default router

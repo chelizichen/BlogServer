@@ -17,3 +17,6 @@ export const useSearchStore = defineStore('search', () => {
   return { searchKeyword }
 })
 
+export const useUserStore = defineStore('user',()=>{
+  
+})

@@ -18,8 +18,6 @@ export default {
       <el-table-column prop="startTime" label="开始时间" align="center" />
       <el-table-column prop="endTime" label="结束时间" align="center" />
       <el-table-column prop="realEndTime" label="实际结束时间" align="center" />
-      <el-table-column prop="content" label="内容" align="center" />
-
       <el-table-column label="操作" width="180" align="center">
         <template #default="scoped">
           <el-button type="text" @click="EditForm(scoped.row)">编辑</el-button>

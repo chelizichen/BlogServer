@@ -4,6 +4,7 @@ import (
 	"Simp/servers/BlogServer/obj/dao"
 	"Simp/src/http"
 	"fmt"
+	"os"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -14,6 +15,7 @@ import (
 var GORM *gorm.DB
 
 func InitStorage(ctx http.SimpHttpServerCtx) {
+
 	db, err := gorm.Open(mysql.Open(ctx.StoragePath), &gorm.Config{
 		SkipDefaultTransaction: true,
 		NamingStrategy: schema.NamingStrategy{
@@ -31,8 +33,10 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxLifetime(time.Hour)
-	db.Debug().AutoMigrate(&dao.User{})
-	db.Debug().AutoMigrate(&dao.Article{})
-	db.Debug().AutoMigrate(&dao.Column{})
+	if os.Getenv("SIMP_SERVER_INDEX") == "1" {
+		db.Debug().AutoMigrate(&dao.User{})
+		db.Debug().AutoMigrate(&dao.Article{})
+		db.Debug().AutoMigrate(&dao.Column{})
+	}
 	GORM = db
 }

@@ -7,6 +7,7 @@ import (
 
 func main() {
 	ctx := h.NewSimpHttpCtx("simp.yaml")
+	ctx.Use(service.LoginService)
 	ctx.Use(service.InitService)
 	ctx.Use(service.ArticleService)
 	ctx.Use(service.ColumnsService)
