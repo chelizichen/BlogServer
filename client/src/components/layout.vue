@@ -30,7 +30,9 @@ export default {
                 class="app-text-center"
                 :index="item"
                 @click="handleOpen(item)"
-                v-if="[item.show !== false].every((v) => v === true)"
+                v-if="
+                  [item.show !== false, userLevel >= item.level].every((v) => v === true)
+                "
               >
                 <el-icon class="app-not-show"><Menu /></el-icon>
                 <template #title>{{ item.name }}</template>
@@ -69,10 +71,15 @@ export default {
 
 <script setup lang="ts">
 import { routes } from "@/router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/stores/counter";
 const userStore = useUserStore();
+const userLevel = computed(() => {
+  console.log("userLevel", userStore.userInfo);
+  return userStore.userInfo.level;
+});
+
 const [_, router] = [useRoute(), useRouter()];
 const searchKeyword = ref();
 function handleOpen(item) {

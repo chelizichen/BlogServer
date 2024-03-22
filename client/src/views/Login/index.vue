@@ -28,7 +28,7 @@ async function saveToken() {
     localSet(constants.USER_NAME, `${name.value}`);
     localSet(constants.ENCRYPT_PASSWORD, `${ret.Data.password}`);
     userStore.userInfo = ret.Data;
-    router.push("/effs");
+    router.push("/home");
   }
 }
 </script>
@@ -41,9 +41,14 @@ async function saveToken() {
           <el-input v-model="name" />
         </el-form-item>
         <el-form-item label="password">
-          <el-input v-model="password" />
+          <el-input v-model="password" type="password" />
         </el-form-item>
-        <el-button type="primary" @click="saveToken()">Submit</el-button>
+        <el-button
+          type="primary"
+          style="background-color: rgb(207, 15, 124); border: none"
+          @click="saveToken()"
+          >Submit</el-button
+        >
       </el-form>
     </div>
   </div>
