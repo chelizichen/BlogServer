@@ -13,7 +13,7 @@ import (
 func ColumnsService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	E := ctx.Engine
 	G := E.Group(pre)
-
+	G.Use(ValidateTokenMiddleware)
 	G.GET("/getColumnDetail", func(c *gin.Context) {
 		id, _ := strconv.Atoi(c.Query("id"))
 		res := storage.GetColumnDetail(id)

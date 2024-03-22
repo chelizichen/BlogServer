@@ -14,6 +14,7 @@ import (
 func ArticleService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	E := ctx.Engine
 	G := E.Group(pre)
+	G.Use(ValidateTokenMiddleware)
 	G.GET("/getArticleList", func(c *gin.Context) {
 		pagination := utils.NewPagination(c)
 		resp := storage.GetArticleList(pagination.Offset, pagination.Size, pagination.Keyword)

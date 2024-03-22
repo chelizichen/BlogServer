@@ -30,7 +30,7 @@ export default {
                 class="app-text-center"
                 :index="item"
                 @click="handleOpen(item)"
-                v-if="item.show !== false"
+                v-if="[item.show !== false].every((v) => v === true)"
               >
                 <el-icon class="app-not-show"><Menu /></el-icon>
                 <template #title>{{ item.name }}</template>
@@ -42,7 +42,7 @@ export default {
       <el-container>
         <el-header>
           <el-card>
-            <el-input v-model="search.searchKeyword" style="width: 200px"></el-input>
+            <el-input v-model="searchKeyword" style="width: 200px"></el-input>
           </el-card>
         </el-header>
         <el-main>
@@ -69,11 +69,12 @@ export default {
 
 <script setup lang="ts">
 import { routes } from "@/router";
-import { useSearchStore } from "@/stores/counter";
+import { ref } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
-
+import { useUserStore } from "@/stores/counter";
+const userStore = useUserStore();
 const [_, router] = [useRoute(), useRouter()];
-const search = useSearchStore();
+const searchKeyword = ref();
 function handleOpen(item) {
   router.push(item.path);
   console.log("item", item);

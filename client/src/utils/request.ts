@@ -1,4 +1,6 @@
+import router from '@/router'
 import axios from 'axios'
+import { constants, localGet } from './local'
 
 const HttpReq = axios.create({
   // baseURL, // api的base_url
@@ -6,6 +8,7 @@ const HttpReq = axios.create({
   method: 'post',
   baseURL: '/blogserver/'
 })
+
 HttpReq.interceptors.response.use((resp) => {
   if (resp.data.Code != 0) {
     console.log('resp.data.Message |', resp.data.Message)
@@ -15,8 +18,8 @@ HttpReq.interceptors.response.use((resp) => {
 })
 
 HttpReq.interceptors.request.use((config) => {
-  const tkn = localStorage.getItem('token')
-  config.headers['token'] = tkn
+  const tkn = localGet(constants.BLOG_TOKEN)
+  config.headers['Token'] = tkn
   return config
 })
 

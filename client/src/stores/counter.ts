@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useArticleStore = defineStore('article', () => {
@@ -18,5 +18,12 @@ export const useSearchStore = defineStore('search', () => {
 })
 
 export const useUserStore = defineStore('user',()=>{
-  
+  const userInfo = ref({
+    name:'',
+    password:'',
+    token:'',
+    level:'',
+  })
+
+  return {userInfo}
 })

@@ -35,7 +35,9 @@ func GenerateToken(username string, expiresAt time.Time) (string, error) {
 // 验证用户登录函数
 func AuthenticateUser(username, password string, user dao.User) bool {
 	if user.Name == username {
-		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+		fmt.Println("user.password", user.Password)
+		fmt.Println("password", password)
+		err := bcrypt.CompareHashAndPassword([]byte(password), []byte(user.Password))
 		if err == nil {
 			return true
 		}

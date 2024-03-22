@@ -9,3 +9,11 @@ export function LogIn(data:any){
         data
     }) as unknown as Promise<BasicResp<any>>
 }
+
+export function LoginByCache(data:any){
+    return request({
+        url:'/loginByCache',
+        method:'post',
+        data
+    }) as unknown as Promise<BasicResp<any>>
+}

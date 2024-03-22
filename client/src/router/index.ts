@@ -1,40 +1,51 @@
+import {  LoginByCache } from '@/api/login'
+import { useUserStore } from '@/stores/counter'
+import { constants, localGet, localSet } from '@/utils/local'
+import { constant } from 'lodash'
 import { createRouter, createWebHistory } from 'vue-router'
 
 export const routes = [
   {
     path: '/home',
     name: '文章列表',
-    component: () => import('../views/Article/List.vue')
+    component: () => import('../views/Article/List.vue'),
+    level:5
   },
   {
     path: '/edit',
     name: '编辑文章',
-    component: () => import('../views/Article/Edit.vue')
+    component: () => import('../views/Article/Edit.vue'),
+    level:5
   },
   {
     path: '/Pics',
     name: '图片审核',
-    component: () => import('../views/Pics.vue')
+    component: () => import('../views/Pics.vue'),
+    level:5
   },
   {
     path: '/columns',
     name: '专栏列表',
-    component: () => import('../views/Column/List.vue')
+    component: () => import('../views/Column/List.vue'),
+    level:5
   },
   {
     path: '/edit_column',
     name: '编辑专栏',
-    component: () => import('../views/Column/Edit.vue')
+    component: () => import('../views/Column/Edit.vue'),
+    level:5
   },
   {
     path: '/effs',
     name: '事件列表',
-    component: () => import('../views/Events/List.vue')
+    component: () => import('../views/Events/List.vue'),
+    level:5
   },
   {
     path: '/create_event',
     name: '创建事件',
-    component: () => import('../views/Events/Edit.vue')
+    component: () => import('../views/Events/Edit.vue'),
+    level:5
   },
   {
     path: '/phone',
@@ -78,15 +89,34 @@ const router = createRouter({
 
 const whileList = ["/login"]
 
-router.beforeEach((to,from,next)=>{
-  console.log('to',to.path);
-  const tkn = localStorage.getItem("blog_server_token")
-  if(tkn || whileList.includes(to.path)){
+router.beforeEach(async (to,from,next)=>{
+  const tkn = localGet(constants.BLOG_TOKEN)
+  const name = localGet(constants.USER_NAME)
+  const password = localGet(constants.ENCRYPT_PASSWORD)
+  const userStore = useUserStore()
+
+  if(whileList.includes(to.path)){
+    console.log('to',to.path);
+    return next()
+  }else if (tkn && (!userStore.userInfo.name && !userStore.userInfo.password && !userStore.userInfo.token)){
+    if(!name || !password){
+      return next('/login')
+    }
+    const data = await LoginByCache({
+      name,
+      password
+    })
+    if(!data.Data){
+      return next("/login")
+    }
+    userStore.userInfo.name = data.Data.name
+    userStore.userInfo.password = data.Data.password
+    userStore.userInfo.token = data.Data.token
+    next()
+  }else if(tkn){
     next()
   }else{
-    next({
-      path:"/login"
-    })
+    next({path:"/login"})
   }
 })
 

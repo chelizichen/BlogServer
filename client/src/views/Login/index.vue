@@ -8,10 +8,13 @@ import { ElMessage } from "element-plus";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { LogIn } from "@/api/login";
+import { useUserStore } from "@/stores/counter";
+import { localSet, constants } from "@/utils/local";
 const router = useRouter();
 const name = ref("");
 const password = ref("");
 
+const userStore = useUserStore();
 async function saveToken() {
   const data = {
     name: name.value,
@@ -21,24 +24,27 @@ async function saveToken() {
   if (ret.Code) {
     ElMessage.error("Please enter a valid token.");
   } else {
+    localSet(constants.BLOG_TOKEN, `${name.value}|${ret.Data.token}`);
+    localSet(constants.USER_NAME, `${name.value}`);
+    localSet(constants.ENCRYPT_PASSWORD, `${ret.Data.password}`);
+    userStore.userInfo = ret.Data;
     router.push("/effs");
-    localStorage.setItem("blog_server_token", ret.Data.token);
   }
 }
 </script>
 <template>
   <div class="body">
     <div class="container">
-      <div class="hello">Welcome Blog</div>
-      <el-form :inline="true">
+      <div class="hello">START</div>
+      <el-form>
         <el-form-item label="username">
           <el-input v-model="name" />
         </el-form-item>
         <el-form-item label="password">
           <el-input v-model="password" />
         </el-form-item>
+        <el-button type="primary" @click="saveToken()">Submit</el-button>
       </el-form>
-      <el-button type="primary" @click="saveToken()">Submit</el-button>
     </div>
   </div>
 </template>
@@ -52,7 +58,7 @@ async function saveToken() {
   background-color: #ffffff;
   .container {
     text-align: center;
-    width: 25vw;
+    width: 20vw;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
