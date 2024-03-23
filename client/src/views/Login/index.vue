@@ -24,9 +24,7 @@ async function saveToken() {
   if (ret.Code) {
     ElMessage.error("Please enter a valid token.");
   } else {
-    localSet(constants.BLOG_TOKEN, `${name.value}|${ret.Data.token}`);
-    localSet(constants.USER_NAME, `${name.value}`);
-    localSet(constants.ENCRYPT_PASSWORD, `${ret.Data.password}`);
+    localSet(constants.BLOG_TOKEN, `${ret.Data.token}`);
     userStore.userInfo = ret.Data;
     router.push("/home");
   }

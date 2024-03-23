@@ -3,16 +3,20 @@ package configuration
 import (
 	"Simp/servers/BlogServer/obj/dao"
 	"Simp/src/http"
+	"context"
 	"fmt"
 	"os"
 	"time"
 
+	redis "github.com/go-redis/redis/v8"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 )
 
 var GORM *gorm.DB
+var GRDB *redis.Client
+var RDBContext = context.Background()
 
 func InitStorage(ctx http.SimpHttpServerCtx) {
 
@@ -39,4 +43,12 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 		db.Debug().AutoMigrate(&dao.Column{})
 	}
 	GORM = db
+	fmt.Println("ctx.MapConf", ctx.MapConf)
+	GRDB = redis.NewClient(&redis.Options{
+		Addr:     ctx.MapConf["redis-addr"].(string),
+		Password: ctx.MapConf["redis-pass"].(string),
+		DB:       0,
+	})
+	// rdb.
+
 }

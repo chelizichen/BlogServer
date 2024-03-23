@@ -91,20 +91,15 @@ const whileList = ["/login"]
 
 router.beforeEach(async (to,from,next)=>{
   const tkn = localGet(constants.BLOG_TOKEN)
-  const name = localGet(constants.USER_NAME)
-  const password = localGet(constants.ENCRYPT_PASSWORD)
   const userStore = useUserStore()
 
   if(whileList.includes(to.path)){
     console.log('to',to.path);
     return next()
   }else if (tkn && (!userStore.userInfo.name && !userStore.userInfo.password && !userStore.userInfo.token)){
-    if(!name || !password){
-      return next('/login')
-    }
     const data = await LoginByCache({
-      name,
-      password
+      name:'',
+      password:''
     })
     if(!data.Data){
       return next("/login")
