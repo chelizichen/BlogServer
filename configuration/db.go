@@ -49,6 +49,13 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 		Password: ctx.MapConf["redis-pass"].(string),
 		DB:       0,
 	})
+	pong, err := GRDB.Ping(RDBContext).Result()
+	if err != nil {
+		fmt.Printf("连接redis出错，错误信息：%v", err.Error())
+	} else {
+		fmt.Println("成功连接redis", pong)
+	}
+
 	// rdb.
 
 }
