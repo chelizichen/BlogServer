@@ -7,4 +7,5 @@ import (
 
 func InitService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	configuration.InitStorage(*ctx)
+	CreateUploadPath()
 }

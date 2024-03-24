@@ -69,7 +69,13 @@ export const routes = [
     name: 'login',
     component: () => import('../views/Login/index.vue'),
     show: false
-  }
+  },
+  {
+    path: '/upload',
+    name: '服务上传',
+    component: () => import('../views/Upload/index.vue'),
+    level:0
+  },
 ]
 
 const router = createRouter({
@@ -87,7 +93,7 @@ const router = createRouter({
 //   }
 // })
 
-const whileList = ["/login"]
+const whileList = ["/login","/upload"]
 
 router.beforeEach(async (to,from,next)=>{
   const tkn = localGet(constants.BLOG_TOKEN)

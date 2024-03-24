@@ -12,8 +12,9 @@ func main() {
 	ctx.Use(service.ArticleService)
 	ctx.Use(service.ColumnsService)
 	ctx.Use(service.ImgService)
+	ctx.Use(service.UploadService)
 	ctx.UseSPA("/web", "dist")
 	ctx.Static("/imgs", "imgs")
-
+	ctx.Static("/uploadPackages", "uploadFile")
 	h.NewSimpHttpServer(ctx)
 }
