@@ -9,7 +9,7 @@ export const routes = [
     path: '/home',
     name: '文章列表',
     component: () => import('../views/Article/List.vue'),
-    level:5
+    level:4
   },
   {
     path: '/edit',
@@ -27,7 +27,7 @@ export const routes = [
     path: '/columns',
     name: '专栏列表',
     component: () => import('../views/Column/List.vue'),
-    level:5
+    level:4
   },
   {
     path: '/edit_column',
@@ -45,7 +45,7 @@ export const routes = [
     path: '/create_event',
     name: '创建事件',
     component: () => import('../views/Events/Edit.vue'),
-    level:5
+    level:4
   },
   {
     path: '/phone',

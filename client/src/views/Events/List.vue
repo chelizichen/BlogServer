@@ -21,7 +21,11 @@ export default {
       <el-table-column label="操作" width="180" align="center">
         <template #default="scoped">
           <el-button type="text" @click="EditForm(scoped.row)">编辑</el-button>
-          <el-button type="text" style="color: red" @click="DelColumnById(scoped.row)"
+          <el-button
+            type="text"
+            style="color: red"
+            @click="DelColumnById(scoped.row)"
+            v-level="5"
             >删除</el-button
           >
         </template>
