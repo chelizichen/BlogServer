@@ -83,11 +83,16 @@ export default {
             </el-form-item>
           </el-form>
         </div>
-        <div style="flex: 1; margin: 0 10px">
-          <el-table :data="commentList" border style="width: 100%" height="250">
-            <el-table-column prop="content" label="内容" width="180" />
+        <div class="commentList">
+          <el-table :data="commentList" border style="width: 100%" height="500">
+            <el-table-column prop="content" label="内容">
+              <template #default="scoped">
+                <div v-html="scoped.row.content"></div>
+              </template>
+            </el-table-column>
+
             <el-table-column prop="createTime" label="创建时间" width="180" />
-            <el-table-column prop="status" label="状态">
+            <el-table-column prop="status" width="180" label="状态">
               <template #default="scoped">
                 <div>{{ statusMap[scoped.row.status] || "其他" }}</div>
               </template>
@@ -220,4 +225,13 @@ function DelColumnById(row: any) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.commentList >>> img {
+  width: 100%;
+  height: 100%;
+}
+.commentList {
+  flex: 1;
+  margin: 0 10px;
+}
+</style>
