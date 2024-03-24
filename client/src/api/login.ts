@@ -17,3 +17,11 @@ export function LoginByCache(data:any){
         data
     }) as unknown as Promise<BasicResp<any>>
 }
+
+export function Logout(params:any){
+    return request({
+        url:'/logout',
+        method:'get',
+        params
+    }) as unknown as Promise<BasicResp<any>>
+}

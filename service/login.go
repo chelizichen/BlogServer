@@ -28,6 +28,11 @@ func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
 			c.AbortWithStatusJSON(200, handlers.Resp(0, "Ok", vo))
 		}
 	})
+	G.GET("/logout", func(c *gin.Context) {
+		s := c.Query("token")
+		i := utils.DelTokenKey(s)
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "OK", i))
+	})
 	G.POST("/login", func(c *gin.Context) {
 		var user *dto.UserDto
 		err := c.BindJSON(&user)

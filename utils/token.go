@@ -86,6 +86,15 @@ func GetTokenKey(Key string) string {
 	return s
 }
 
+func DelTokenKey(Key string) int64 {
+	i, err := c.GRDB.Del(c.RDBContext, Key).Result()
+	if err != nil {
+		fmt.Println("DelTokenKey | Err", err.Error())
+		return 0
+	}
+	return i
+}
+
 func ValidateTokenMiddleware(c *gin.Context) {
 	s := c.Request.Header["Token"]
 	if len(s) == 0 {

@@ -44,7 +44,30 @@ export default {
       <el-container>
         <el-header>
           <el-card>
-            <el-input v-model="searchKeyword" style="width: 200px"></el-input>
+            <div
+              style="display: flex; justify-content: space-between; align-items: center"
+            >
+              <div>
+                <el-input v-model="searchKeyword" style="width: 200px"></el-input>
+              </div>
+              <div>
+                <el-menu
+                  class="el-menu-demo"
+                  mode="horizontal"
+                  :ellipsis="false"
+                  @select="handleSelect"
+                >
+                  <el-sub-menu index="2">
+                    <template #title>
+                      <el-avatar
+                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                    /></template>
+                    <el-menu-item index="2-1">注销</el-menu-item>
+                    <el-menu-item index="2-2">修改信息</el-menu-item>
+                  </el-sub-menu>
+                </el-menu>
+              </div>
+            </div>
           </el-card>
         </el-header>
         <el-main>
@@ -74,6 +97,8 @@ import { routes } from "@/router";
 import { ref, computed } from "vue";
 import { RouterView, useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/stores/counter";
+import { Logout } from "@/api/login";
+import { constants, localDel, localGet } from "@/utils/local";
 const userStore = useUserStore();
 const userLevel = computed(() => {
   console.log("userLevel", userStore.userInfo);
@@ -85,6 +110,17 @@ const searchKeyword = ref();
 function handleOpen(item) {
   router.push(item.path);
   console.log("item", item);
+}
+
+function handleSelect(item) {
+  if (item == "2-1") {
+    const token = localGet(constants.BLOG_TOKEN);
+    Logout({ token }).then((res) => {
+      router.push("/login");
+      localDel(constants.BLOG_TOKEN);
+    });
+  }
+  console.log(item);
 }
 </script>
 

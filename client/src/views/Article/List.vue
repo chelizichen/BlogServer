@@ -31,9 +31,11 @@ export default {
       <el-table-column label="操作" width="180" align="center">
         <template #default="scoped">
           <div>
-            <el-button type="text" style="color: red">删除</el-button>
-            <el-button type="text" @click="Edit(scoped.row)">编辑</el-button>
-            <el-button type="text" @click="chooseColumn(scoped.row)">选择专栏</el-button>
+            <el-button type="text" style="color: red" v-level="5">删除</el-button>
+            <el-button type="text" v-level="5" @click="Edit(scoped.row)">编辑</el-button>
+            <el-button type="text" v-level="5" @click="chooseColumn(scoped.row)"
+              >选择专栏</el-button
+            >
           </div>
         </template>
       </el-table-column>
