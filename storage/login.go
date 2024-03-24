@@ -28,3 +28,17 @@ func LoginByCache(user dto.UserDto) (resp *dao.User, err error) {
 	}
 	return nil, r
 }
+
+func SaveUser(user dto.UserDto) int {
+	var usr *dao.User
+	c.GORM.Where("name = ?", user.Name).Find(&usr)
+	if usr.Name == "" && usr.ID == 0 {
+		c.GORM.Model(&dao.User{}).Create(&dao.User{
+			Name:     user.Name,
+			Password: user.Password,
+			Level:    4,
+		})
+		return 1
+	}
+	return 0
+}

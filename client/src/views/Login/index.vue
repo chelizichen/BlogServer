@@ -5,9 +5,9 @@ export default {
 </script>
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import { LogIn } from "@/api/login";
+import { LogIn, SaveUser } from "@/api/login";
 import { useUserStore } from "@/stores/counter";
 import { localSet, constants } from "@/utils/local";
 const router = useRouter();
@@ -15,7 +15,7 @@ const name = ref("");
 const password = ref("");
 
 const userStore = useUserStore();
-async function saveToken() {
+async function loginUser() {
   const data = {
     name: name.value,
     password: password.value,
@@ -29,7 +29,28 @@ async function saveToken() {
     router.push("/home");
   }
 }
+
+async function saveUser() {
+  const data = {
+    name: name.value,
+    password: password.value,
+  };
+  const ret = await SaveUser(data);
+  if (ret.Code) {
+    ElMessage.error("注册失败|" + ret.Message);
+  } else {
+    isLogin.value = true;
+    // localSet(constants.BLOG_TOKEN, `${ret.Data.token}`);
+    // userStore.userInfo = ret.Data;
+    // router.push("/home");
+  }
+}
+
 const isLogin = ref(true);
+watch(isLogin, function () {
+  name.value = "";
+  password.value = "";
+});
 </script>
 <template>
   <div class="center">
@@ -38,10 +59,14 @@ const isLogin = ref(true);
         <form>
           <h2 class="title">Create Account</h2>
           <span class="text">or use email for registration</span>
-          <input class="form__input" type="text" placeholder="Name" />
-          <input class="form__input" type="text" placeholder="Email" />
-          <input class="form__input" type="password" placeholder="Password" />
-          <div class="primary-btn">立即注册</div>
+          <input class="form__input" type="text" placeholder="Name" v-model="name" />
+          <input
+            class="form__input"
+            type="text"
+            placeholder="Password"
+            v-model="password"
+          />
+          <div class="primary-btn" @click="saveUser">立即注册</div>
         </form>
       </div>
       <div :class="['container', 'container-login', { 'is-txl is-z200': isLogin }]">
@@ -55,7 +80,7 @@ const isLogin = ref(true);
             placeholder="Password"
             v-model="password"
           />
-          <div class="primary-btn" @click="saveToken">立即登录</div>
+          <div class="primary-btn" @click="loginUser">立即登录</div>
         </form>
       </div>
       <div :class="['switch', { login: isLogin }]">

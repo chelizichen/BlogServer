@@ -33,6 +33,24 @@ func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		i := utils.DelTokenKey(s)
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "OK", i))
 	})
+	G.POST("/saveUser", func(c *gin.Context) {
+		var user *dto.UserDto
+		err := c.BindJSON(&user)
+		if user.Name == "" || user.Password == "" {
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "input account error", nil))
+			return
+		}
+		if err != nil {
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "bind json error", nil))
+			return
+		}
+		i := storage.SaveUser(*user)
+		if i == 0 {
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "用户名已存在", nil))
+			return
+		}
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", nil))
+	})
 	G.POST("/login", func(c *gin.Context) {
 		var user *dto.UserDto
 		err := c.BindJSON(&user)

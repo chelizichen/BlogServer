@@ -10,6 +10,14 @@ export function LogIn(data:any){
     }) as unknown as Promise<BasicResp<any>>
 }
 
+export function SaveUser(data:any){
+    return request({
+        url:'/saveUser',
+        method:'post',
+        data
+    }) as unknown as Promise<BasicResp<any>>
+}
+
 export function LoginByCache(data:any){
     return request({
         url:'/loginByCache',
