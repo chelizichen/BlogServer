@@ -18,11 +18,13 @@ export default {
             style="border: none"
           >
             <el-menu-item>
-              <el-icon style="color: rgb(207, 90, 124); font-size: 36px"
-                ><Help
-              /></el-icon>
+              <el-icon style="color: rgb(207, 90, 124); font-size: 24px">
+                <Expand />
+              </el-icon>
               <template #title>
-                <div style="color: rgb(207, 90, 124); font-size: 18px">Blog</div>
+                <div style="color: rgb(207, 90, 124); font-size: 18px; font-weight: 900">
+                  SefficiencY
+                </div>
               </template>
             </el-menu-item>
             <template v-for="(item, index) in routes" :key="index">

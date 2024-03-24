@@ -39,13 +39,13 @@ export const routes = [
     path: '/effs',
     name: '事件列表',
     component: () => import('../views/Events/List.vue'),
-    level:5
+    level:4
   },
   {
     path: '/create_event',
     name: '创建事件',
     component: () => import('../views/Events/Edit.vue'),
-    level:4
+    level:5
   },
   {
     path: '/phone',
