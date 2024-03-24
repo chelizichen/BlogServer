@@ -44,7 +44,7 @@ export default {
         </el-card>
       </el-aside>
       <el-container>
-        <el-header>
+        <el-header style="margin-bottom: 20px">
           <el-card>
             <div
               style="display: flex; justify-content: space-between; align-items: center"
@@ -58,30 +58,21 @@ export default {
                   mode="horizontal"
                   :ellipsis="false"
                   @select="handleSelect"
-                  v-level="1"
                 >
                   <el-sub-menu index="2">
                     <template #title>
                       <el-avatar
                         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
                     /></template>
-                    <el-menu-item index="2-1">注销</el-menu-item>
-                    <el-menu-item index="2-2">修改信息</el-menu-item>
-                  </el-sub-menu>
-                </el-menu>
-                <el-menu
-                  class="el-menu-demo"
-                  mode="horizontal"
-                  :ellipsis="false"
-                  @select="handleSelect"
-                  v-level="0"
-                >
-                  <el-sub-menu index="2">
-                    <template #title>
-                      <el-avatar
-                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-                    /></template>
-                    <el-menu-item index="2-0">登陆</el-menu-item>
+                    <el-menu-item index="2-0" v-if="!userLevel" v-level="0"
+                      >登陆</el-menu-item
+                    >
+                    <el-menu-item index="2-1" v-if="userLevel" v-level="1"
+                      >注销</el-menu-item
+                    >
+                    <el-menu-item index="2-2" v-if="userLevel" v-level="1"
+                      >修改信息</el-menu-item
+                    >
                   </el-sub-menu>
                 </el-menu>
               </div>
@@ -101,7 +92,7 @@ export default {
           </el-divider>
           <el-divider content-position="center">
             <div style="color: rgb(207, 15, 124); font-size: 14px">
-              SefficiencY Deploy From SimpCloud
+              SefficiencY Started From SimpCloud
             </div>
           </el-divider>
         </el-footer>
@@ -139,8 +130,8 @@ function handleSelect(item) {
     });
   }
   if (item == "2-0") {
-    localDel(constants.BLOG_TOKEN);
     router.push("/login");
+    localDel(constants.BLOG_TOKEN);
   }
   console.log(item);
 }

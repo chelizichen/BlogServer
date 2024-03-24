@@ -16,7 +16,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.use(ElementPlus, { zIndex: 3000 })
 app.use(createPinia())
 app.directive(level.name,{
-  beforeMount:level.hooks.beforeMount,
+  mounted:level.hooks.mounted,
 })
 app.use(router)
 app.mount('#app')
