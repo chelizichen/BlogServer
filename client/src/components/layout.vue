@@ -92,7 +92,7 @@ export default {
           </el-divider>
           <el-divider content-position="center">
             <div style="color: rgb(207, 15, 124); font-size: 14px">
-              SefficiencY Deployed From SimpCloud
+              SefficiencY Deployed On SimpCloud
             </div>
           </el-divider>
         </el-footer>

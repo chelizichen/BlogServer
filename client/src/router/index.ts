@@ -76,6 +76,12 @@ export const routes = [
     component: () => import('../views/Upload/index.vue'),
     level:0
   },
+  {
+    path: '/users',
+    name: '用户管理',
+    component: () => import('../views/User/index.vue'),
+    level:0
+  },
 ]
 
 const router = createRouter({

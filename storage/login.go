@@ -36,7 +36,7 @@ func SaveUser(user dto.UserDto) int {
 		c.GORM.Model(&dao.User{}).Create(&dao.User{
 			Name:     user.Name,
 			Password: user.Password,
-			Level:    4,
+			Level:    1,
 		})
 		return 1
 	}

@@ -91,5 +91,5 @@ func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		}
 		c.AbortWithStatusJSON(200, handlers.Resp(-1, "error", err.Error()))
 	})
-	E.Use(G.Handlers...)
+
 }

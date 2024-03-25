@@ -13,6 +13,7 @@ func main() {
 	ctx.Use(service.ColumnsService)
 	ctx.Use(service.ImgService)
 	ctx.Use(service.UploadService)
+	ctx.Use(service.UserService)
 	ctx.UseSPA("/web", "dist")
 	ctx.Static("/imgs", "imgs")
 	ctx.Static("/uploadPackages", "uploadFile")
