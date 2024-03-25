@@ -6,8 +6,21 @@ export default {
 <template>
   <div>
     <div style="display: flex; align-items: center; justify-content: space-around">
-      <h1 style="color: #712424">优品-中原远程包发布与管理中心</h1>
+      <h1 style="color: #712424">优品-中原远程服务包发布与管理中心</h1>
       <input type="file" ref="fileRef" />
+    </div>
+    <div style="margin-bottom: 20px">
+      <el-progress
+        :text-inside="true"
+        :stroke-width="20"
+        :percentage="percentage"
+        status="exception"
+        :color="percentageColor"
+        striped
+        striped-flow
+      >
+        <span>{{ percentageText }}</span>
+      </el-progress>
     </div>
     <el-card shadow="hover" v-for="(item, key) in uploadList" :key="key">
       <div style="display: flex; align-items: center; justify-content: space-between">
@@ -31,14 +44,31 @@ export default {
 
 <script setup lang="ts">
 import API from "@/api/upload";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import SparkMD5 from "spark-md5";
 const chunkSize = 1024 * 1024 * 20;
 const fileRef = ref<HTMLInputElement>();
+
+const percentage = ref(0);
+const everyChunkPercent = ref(0);
+const percentageColor = ref("#f56c6c");
+const percentageText = ref("等待上传");
+watch(percentage, () => {
+  if (percentage.value == 100) {
+    percentageColor.value = "green";
+    percentageText.value = "上传成功";
+  } else if (percentage.value == 0) {
+    percentageText.value = "等待上传";
+  } else {
+    percentageText.value = "上传中，请勿离开";
+    percentageColor.value = "#e6a23c";
+  }
+});
+
 function initDom() {
   fileRef.value!.onchange = function (e) {
     console.log("this.files", this);
-
+    percentage.value = 0;
     const file = this.files[0];
     const sliceBuffer = [];
     let sliceSize = file.size;
@@ -74,15 +104,21 @@ function initDom() {
           sliceBuffer.forEach((buffer, i) => {
             if (!chunkList.includes(i)) {
               const blob = new File([buffer], `${i}`);
-              chunkRequests.push(API.uploadFileChunk(fileHash, blob));
+              chunkRequests.push(
+                API.uploadFileChunk(fileHash, blob).then(() => {
+                  percentage.value += everyChunkPercent.value;
+                })
+              );
             }
           });
           len = chunkRequests.length;
+          everyChunkPercent.value = 100 / len;
           return Promise.all(chunkRequests);
         })
         .then((res) => {
           let timer: unknown = setInterval(async () => {
             const resp = await API.megerChunkFile(fileHash, file.name, len);
+            percentage.value = 100;
             if (!resp.code) {
               console.log("resp", resp);
               clearInterval(timer);
@@ -124,4 +160,9 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.demo-progress .el-progress--line {
+  margin-bottom: 15px;
+  max-width: 600px;
+}
+</style>
