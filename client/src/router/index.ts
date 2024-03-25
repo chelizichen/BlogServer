@@ -80,7 +80,7 @@ export const routes = [
     path: '/users',
     name: '用户管理',
     component: () => import('../views/User/index.vue'),
-    level:0
+    level:5
   },
 ]
 
