@@ -97,6 +97,7 @@ const handleCreated = (editor) => {
   editorRef.value = editor; // 记录 editor 实例，重要！
 };
 const loading = ref(false);
+const createId = ref(0);
 const onSubmit = async () => {
   loading.value = true;
   if (!form.title) {
