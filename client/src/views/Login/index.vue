@@ -16,20 +16,23 @@ const password = ref("");
 
 const userStore = useUserStore();
 async function loginUser() {
+  if (!name.value || !password.value) {
+    ElMessage.error("Password or username cannot be empty.");
+    return;
+  }
   const data = {
     name: name.value,
     password: password.value,
   };
   const ret = await LogIn(data);
   if (ret.Code) {
-    ElMessage.error("Please enter a valid token.");
+    ElMessage.error("Login in error.");
   } else {
     localSet(constants.BLOG_TOKEN, `${ret.Data.token}`);
     userStore.userInfo = ret.Data;
     router.push("/home");
   }
 }
-
 async function saveUser() {
   const data = {
     name: name.value,
