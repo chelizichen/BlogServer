@@ -58,6 +58,10 @@ func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
 			c.AbortWithStatusJSON(200, handlers.Resp(-1, "bind json error", nil))
 			return
 		}
+		if user.Name == "" || user.Password == "" {
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "missing params error", nil))
+			return
+		}
 		r, err := storage.LoginUser(*user)
 		if err != nil {
 			fmt.Println("LoginUserError", err.Error())
