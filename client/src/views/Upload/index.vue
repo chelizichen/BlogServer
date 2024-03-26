@@ -53,6 +53,13 @@ const percentage = ref(0);
 const everyChunkPercent = ref(0);
 const percentageColor = ref("#f56c6c");
 const percentageText = ref("等待上传");
+const uploadInfo = ref({
+  ServerName: "",
+  SpendTime: 0,
+  ChunkLength: 0,
+  ChunkSize: 0,
+  Hash: "",
+});
 watch(percentage, () => {
   if (percentage.value == 100) {
     percentageColor.value = "green";
@@ -68,6 +75,7 @@ watch(percentage, () => {
 function initDom() {
   fileRef.value!.onchange = function (e) {
     console.log("this.files", this);
+    const startTime = new Date().getTime();
     percentage.value = 0;
     const file = this.files[0];
     const sliceBuffer = [];
@@ -113,12 +121,22 @@ function initDom() {
           });
           len = chunkRequests.length;
           everyChunkPercent.value = 100 / len;
+          // ref update
+          uploadInfo.value.ChunkLength = len; // update
+          uploadInfo.value.ChunkSize = chunkSize; // update
+          uploadInfo.value.ServerName = file.name; // update
+
           return Promise.all(chunkRequests);
         })
         .then((res) => {
           let timer: unknown = setInterval(async () => {
             const resp = await API.megerChunkFile(fileHash, file.name, len);
             percentage.value = 100;
+            const endTime = new Date().getTime();
+            // ref update
+            uploadInfo.value.Hash = fileHash; // update
+            uploadInfo.value.SpendTime = (endTime - startTime) / 1000;
+            API.saveUploadInfo(uploadInfo.value);
             if (!resp.code) {
               console.log("resp", resp);
               clearInterval(timer);

@@ -41,6 +41,7 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 		db.Debug().AutoMigrate(&dao.User{})
 		db.Debug().AutoMigrate(&dao.Article{})
 		db.Debug().AutoMigrate(&dao.Column{})
+		db.Debug().AutoMigrate(&dao.UploadInfo{})
 	}
 	GORM = db
 	fmt.Println("ctx.MapConf", ctx.MapConf)

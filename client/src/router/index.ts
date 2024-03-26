@@ -77,6 +77,12 @@ export const routes = [
     level:0
   },
   {
+    path: '/uploadList',
+    name: '上传统计',
+    component: () => import('../views/Upload/list.vue'),
+    level:0
+  },
+  {
     path: '/users',
     name: '用户管理',
     component: () => import('../views/User/index.vue'),
@@ -99,7 +105,7 @@ const router = createRouter({
 //   }
 // })
 
-const whileList = ["/login","/upload"]
+const whileList = ["/login","/upload","/uploadList"]
 
 router.beforeEach(async (to,from,next)=>{
   const tkn = localGet(constants.BLOG_TOKEN)

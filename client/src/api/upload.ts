@@ -51,5 +51,23 @@ export default {
       url: `/megerChunk?hash=${hash}&fileName=${fileName}&size=${len}`,
       method: 'get'
     })
+  },
+  saveUploadInfo(data){
+    return HttpReq({
+      url: `/saveUploadInfo`,
+      method: 'post',
+      data
+    })
+  },
+  getUploadInfoList(keyword:string){
+    return HttpReq({
+      url: `/getUploadInfoList`,
+      method: 'get',
+      params:{
+        offset:0,
+        size:9999,
+        keyword
+      }
+    })
   }
 }

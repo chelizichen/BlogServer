@@ -1,6 +1,8 @@
 package service
 
 import (
+	"Simp/servers/BlogServer/obj/dao"
+	"Simp/servers/BlogServer/storage"
 	"Simp/servers/BlogServer/utils"
 	handlers "Simp/src/http"
 	"fmt"
@@ -23,6 +25,30 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	E := ctx.Engine
 	G := E.Group(pre)
 	G.Use(Cors)
+	G.POST("/saveUploadInfo", func(c *gin.Context) {
+		var upload *dao.UploadInfo
+		err := c.BindJSON(&upload)
+		if err != nil {
+			fmt.Println("err", err.Error())
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "bind json error", nil))
+			return
+		}
+		storage.SaveUploadInfo(*upload)
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", nil))
+	})
+	G.GET("/getUploadInfoList", func(c *gin.Context) {
+		pagination := utils.NewPagination(c)
+		resp, tt, err := storage.GetUploadInfoList(*pagination)
+		if err != nil {
+			fmt.Println("error", err.Error())
+			c.AbortWithStatusJSON(200, handlers.Resp(-1, "getUploadInfoList error"+err.Error(), nil))
+			return
+		}
+		m := make(map[string]interface{})
+		m["list"] = resp
+		m["total"] = tt
+		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", m))
+	})
 	G.GET("/checkChunk", func(c *gin.Context) {
 		hash := c.Query("hash")
 		hashPath := fmt.Sprintf("./uploadFile/%s", hash)

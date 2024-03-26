@@ -33,3 +33,15 @@ type Article struct {
 	Type       *int       `json:"type,omitempty" gorm:"default:0"`
 	ColumnId   *int       `json:"column_id,omitempty" gorm:"column:column_id;default:0"`
 }
+
+// 上传统计
+// 做统计用的！
+type UploadInfo struct {
+	ID          uint
+	ServerName  string
+	SpendTime   float32    // 秒
+	ChunkLength uint       // 几块
+	Chunksize   uint       // Size
+	Hash        string     // Hash值
+	CreateTime  *time.Time `json:"create_time,omitempty" gorm:"autoCreateTime"`
+}
