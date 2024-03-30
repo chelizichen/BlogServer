@@ -5,6 +5,9 @@ export default {
 </script>
 <template>
   <div>
+    <div style="margin: 10px 10px 10px 0; display: flex">
+      <el-button @click="Edit(null)">新增</el-button>
+    </div>
     <el-table :data="list" style="width: 100%" border>
       <el-table-column type="index" width="90" label="序号" align="center" />
       <el-table-column prop="column.id" label="标识" align="center" />
@@ -30,6 +33,8 @@ export default {
 import { delColumnById, getColumns } from "@/api/column";
 import { ElMessageBox } from "element-plus";
 import { onMounted, ref } from "vue";
+import router from "@/router";
+
 onMounted(async () => {
   const data = await getColumns(params.value);
   list.value = data.Data.list;
@@ -39,6 +44,16 @@ const params = ref({
   size: 10,
   keyword: "",
 });
+
+function Edit(item) {
+  router.push({
+    path: "/edit_column",
+    query: {
+      id: item ? item.id : undefined,
+    },
+  });
+}
+
 const list = ref();
 function DelColumnById(row: any) {
   ElMessageBox.prompt("Are you sure to delete this", "Confirm", {

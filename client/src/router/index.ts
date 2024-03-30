@@ -15,7 +15,8 @@ export const routes = [
     path: '/edit',
     name: '编辑文章',
     component: () => import('../views/Article/Edit.vue'),
-    level:5
+    level:5,
+    show:false,
   },
   {
     path: '/Pics',
@@ -33,7 +34,8 @@ export const routes = [
     path: '/edit_column',
     name: '编辑专栏',
     component: () => import('../views/Column/Edit.vue'),
-    level:5
+    level:5,
+    show:false,
   },
   {
     path: '/effs',
@@ -45,12 +47,15 @@ export const routes = [
     path: '/create_event',
     name: '创建事件',
     component: () => import('../views/Events/Edit.vue'),
-    level:5
+    level:5,
+    show:false,
   },
   {
     path: '/phone',
     name: '移动端',
-    component: () => import('../views/Phone.vue')
+    component: () => import('../views/Phone.vue'),
+    show: true,
+    level:0,
   },
   {
     path: '/Detail',

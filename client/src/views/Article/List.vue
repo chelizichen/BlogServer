@@ -8,6 +8,7 @@ export default {
     <div style="margin: 10px 10px 10px 0; display: flex">
       <el-input v-model="params.keyword" style="width: 200px; margin: 0 10px 0 0" />
       <el-button @click="getList">搜索</el-button>
+      <el-button @click="Edit(null)">新增</el-button>
     </div>
     <el-table :data="articleList" style="width: 100%" border>
       <el-table-column type="index" width="90" label="序号" align="center" />
@@ -114,7 +115,7 @@ function Edit(item) {
   router.push({
     path: "/edit",
     query: {
-      id: item.id,
+      id: item ? item.id : undefined,
     },
   });
 }

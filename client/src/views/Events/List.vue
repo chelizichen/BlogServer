@@ -5,6 +5,10 @@ export default {
 </script>
 <template>
   <div>
+    <div style="margin: 10px 10px 10px 0; display: flex">
+      <el-button @click="Edit(null)">新增</el-button>
+    </div>
+
     <el-table :data="list" style="width: 100%" border>
       <el-table-column type="index" width="90" label="序号" align="center" />
       <el-table-column prop="title" label="标题" align="center" />
@@ -125,6 +129,7 @@ import { toolbarConfig, editorConfig } from "@/utils/editor";
 // @ts-ignore
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+import router from "@/router";
 
 const mode = "simple";
 const editorRef = shallowRef();
@@ -133,28 +138,15 @@ const handleCreated = (editor) => {
 };
 const editData = ref();
 const editDataVisible = ref(false);
-const commentList = ref([
-  {
-    date: "2016-05-03",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-02",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-04",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-  {
-    date: "2016-05-01",
-    name: "Tom",
-    address: "No. 189, Grove St, Los Angeles",
-  },
-]);
+function Edit(item) {
+  router.push({
+    path: "/create_event",
+    query: {
+      id: item ? item.id : undefined,
+    },
+  });
+}
+const commentList = ref([]);
 async function SubmitEditForm() {
   const body = editData.value;
   const resp = await changeStatus(body);
