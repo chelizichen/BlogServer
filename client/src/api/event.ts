@@ -33,3 +33,11 @@ export function getCommentsByEventId(params: any) {
     params
   }) as unknown as Promise<BasicResp<any>>
 }
+
+export function deleteEvent(data: any) {
+  return request({
+    method: 'post',
+    url: 'deleteEvent',
+    data
+  }) as unknown as Promise<BasicResp<any>>
+}

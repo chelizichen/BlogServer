@@ -120,7 +120,7 @@ export default {
 </template>
 
 <script setup lang="ts">
-import { changeStatus, getCommentsByEventId, getEvents } from "@/api/event";
+import { changeStatus, getCommentsByEventId, deleteEvent } from "@/api/event";
 import { ElMessage, ElMessageBox, dayjs } from "element-plus";
 import { cloneDeep } from "lodash";
 import moment from "moment";
@@ -184,7 +184,7 @@ const statusArr = Object.entries(statusMap).reduce((pre, curr) => {
   return pre;
 }, []);
 
-onMounted(async () => {
+async function init() {
   const data = await getEvents(params.value);
   list.value = data.Data.map((v) => {
     v.createTime = !v.createTime
@@ -197,6 +197,10 @@ onMounted(async () => {
     v.startTime = !v.startTime ? "--" : moment(v.startTime).format("YYYY-MM-DD HH:mm:ss");
     return v;
   });
+}
+
+onMounted(async () => {
+  await init();
 });
 const params = ref({
   offset: 0,
@@ -213,6 +217,9 @@ function DelColumnById(row: any) {
     if (value != "0504") {
       return false;
     }
+    const ret = await deleteEvent({ id: row.id });
+    console.log("ret", ret);
+    await init();
   });
 }
 </script>
