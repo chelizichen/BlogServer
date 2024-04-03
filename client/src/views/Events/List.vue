@@ -120,7 +120,7 @@ export default {
 </template>
 
 <script setup lang="ts">
-import { changeStatus, getCommentsByEventId, deleteEvent } from "@/api/event";
+import { changeStatus, getCommentsByEventId, deleteEvent, getEvents } from "@/api/event";
 import { ElMessage, ElMessageBox, dayjs } from "element-plus";
 import { cloneDeep } from "lodash";
 import moment from "moment";
@@ -219,7 +219,7 @@ function DelColumnById(row: any) {
     }
     const ret = await deleteEvent({ id: row.id });
     console.log("ret", ret);
-    await init();
+    // await init();
   });
 }
 </script>
