@@ -24,7 +24,12 @@ export default {
       <el-table-column prop="realEndTime" label="实际结束时间" align="center" />
       <el-table-column label="操作" width="180" align="center">
         <template #default="scoped">
-          <el-button type="text" @click="EditForm(scoped.row)">编辑</el-button>
+          <el-button
+            type="text"
+            @click="EditForm(scoped.row)"
+            style="color: rgb(207, 15, 124)"
+            >编辑</el-button
+          >
           <el-button
             type="text"
             style="color: red"
@@ -94,11 +99,16 @@ export default {
                 <div v-html="scoped.row.content"></div>
               </template>
             </el-table-column>
-
             <el-table-column prop="createTime" label="创建时间" width="180" />
             <el-table-column prop="status" width="180" label="状态">
               <template #default="scoped">
-                <div>{{ statusMap[scoped.row.status] || "其他" }}</div>
+                <el-button
+                  @click="check(scoped.row)"
+                  type="text"
+                  style="color: rgb(207, 15, 124)"
+                >
+                  {{ statusMap[scoped.row.status] || "其他" }}
+                </el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -113,6 +123,22 @@ export default {
             >Create</el-button
           >
           <el-button @click="editDataVisible = false">Cancel</el-button>
+        </div>
+      </template>
+    </el-dialog>
+    <el-dialog v-model="contentVisible" :title="statusMap[contentRef.status]" width="800">
+      <div class="content">
+        <div v-html="contentRef.content"></div>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button
+            type="primary"
+            @click="contentVisible = false"
+            style="background-color: rgb(207, 15, 124); border: none"
+          >
+            Confirm
+          </el-button>
         </div>
       </template>
     </el-dialog>
@@ -198,6 +224,12 @@ async function init() {
     return v;
   });
 }
+const contentRef = ref({});
+const contentVisible = ref(false);
+function check(content: any) {
+  contentVisible.value = true;
+  contentRef.value = content;
+}
 
 onMounted(async () => {
   await init();
@@ -226,6 +258,10 @@ function DelColumnById(row: any) {
 
 <style scoped>
 .commentList >>> img {
+  width: 100%;
+  height: 100%;
+}
+.content >>> img {
   width: 100%;
   height: 100%;
 }
