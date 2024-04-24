@@ -2,7 +2,7 @@ import {  LoginByCache } from '@/api/login'
 import { useUserStore } from '@/stores/counter'
 import { constants, localGet, localSet } from '@/utils/local'
 import { constant } from 'lodash'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 
 export const routes = [
   {
@@ -96,7 +96,7 @@ export const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes
 })
 
@@ -125,7 +125,7 @@ router.beforeEach(async (to,from,next)=>{
       password:''
     })
     if(!data.data){
-      return next("/login")
+      return next({path:"/login"})
     }
     userStore.userInfo = data.data
     next()
