@@ -1,8 +1,8 @@
 package configuration
 
 import (
-	"Simp/servers/BlogServer/obj/dao"
-	"Simp/src/http"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
+	"Sgrid/src/config"
 	"context"
 	"fmt"
 	"os"
@@ -18,9 +18,11 @@ var GORM *gorm.DB
 var GRDB *redis.Client
 var RDBContext = context.Background()
 
-func InitStorage(ctx http.SimpHttpServerCtx) {
-
-	db, err := gorm.Open(mysql.Open(ctx.StoragePath), &gorm.Config{
+func InitStorage(ctx *config.SgridConf) {
+	db_master := ctx.GetString("db_master")
+	redis_addr := ctx.GetString("redis-addr")
+	redis_pass := ctx.GetString("redis-pass")
+	db, err := gorm.Open(mysql.Open(db_master), &gorm.Config{
 		SkipDefaultTransaction: true,
 		NamingStrategy: schema.NamingStrategy{
 			TablePrefix:   "blog_",
@@ -44,10 +46,9 @@ func InitStorage(ctx http.SimpHttpServerCtx) {
 		db.Debug().AutoMigrate(&dao.UploadInfo{})
 	}
 	GORM = db
-	fmt.Println("ctx.MapConf", ctx.MapConf)
 	GRDB = redis.NewClient(&redis.Options{
-		Addr:     ctx.MapConf["redis-addr"].(string),
-		Password: ctx.MapConf["redis-pass"].(string),
+		Addr:     redis_addr,
+		Password: redis_pass,
 		DB:       0,
 	})
 	pong, err := GRDB.Ping(RDBContext).Result()

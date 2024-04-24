@@ -124,10 +124,10 @@ router.beforeEach(async (to,from,next)=>{
       name:'',
       password:''
     })
-    if(!data.Data){
+    if(!data.data){
       return next("/login")
     }
-    userStore.userInfo = data.Data
+    userStore.userInfo = data.data
     next()
   }else if(tkn){
     next()

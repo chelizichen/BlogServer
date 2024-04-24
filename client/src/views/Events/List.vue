@@ -176,8 +176,8 @@ const commentList = ref([]);
 async function SubmitEditForm() {
   const body = editData.value;
   const resp = await changeStatus(body);
-  if (resp.Code) {
-    ElMessage.error(resp.Message);
+  if (resp.code) {
+    ElMessage.error(resp.message);
     editDataVisible.value = false;
   }
   ElMessage.success("评价成功");
@@ -212,7 +212,7 @@ const statusArr = Object.entries(statusMap).reduce((pre, curr) => {
 
 async function init() {
   const data = await getEvents(params.value);
-  list.value = data.Data.map((v) => {
+  list.value = data.data.map((v) => {
     v.createTime = !v.createTime
       ? "--"
       : moment(v.createTime).format("YYYY-MM-DD HH:mm:ss");

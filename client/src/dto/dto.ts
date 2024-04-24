@@ -1,5 +1,5 @@
 export interface BasicResp<T> {
-  Data: T
-  Message: string
-  Code: number
+  data: T
+  message: string
+  code: number
 }

@@ -25,11 +25,11 @@ async function loginUser() {
     password: password.value,
   };
   const ret = await LogIn(data);
-  if (ret.Code) {
+  if (ret.code) {
     ElMessage.error("Login in error.");
   } else {
-    localSet(constants.BLOG_TOKEN, `${ret.Data.token}`);
-    userStore.userInfo = ret.Data;
+    localSet(constants.BLOG_TOKEN, `${ret.data.token}`);
+    userStore.userInfo = ret.data;
     router.push("/home");
   }
 }
@@ -39,8 +39,8 @@ async function saveUser() {
     password: password.value,
   };
   const ret = await SaveUser(data);
-  if (ret.Code) {
-    ElMessage.error("注册失败|" + ret.Message);
+  if (ret.code) {
+    ElMessage.error("注册失败|" + ret.message);
   } else {
     isLogin.value = true;
     // localSet(constants.BLOG_TOKEN, `${ret.Data.token}`);

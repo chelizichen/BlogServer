@@ -1,18 +1,20 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/obj/dto"
-	"Simp/servers/BlogServer/obj/vo"
-	"Simp/servers/BlogServer/storage"
-	"Simp/servers/BlogServer/utils"
-	handlers "Simp/src/http"
+	"Sgrid/server/SubServer/BlogServer/obj/dto"
+	"Sgrid/server/SubServer/BlogServer/obj/vo"
+	"Sgrid/server/SubServer/BlogServer/storage"
+	"Sgrid/server/SubServer/BlogServer/utils"
+	handlers "Sgrid/src/http"
+
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func UserService(ctx *handlers.SimpHttpServerCtx, pre string) {
-	E := ctx.Engine
-	G := E.Group(pre)
+func UserService(ctx *handlers.SgridServerCtx) {
+	G := ctx.Engine.Group(strings.ToLower(ctx.Name))
+
 	G.GET("/getUserList", func(c *gin.Context) {
 		pagination := utils.NewPagination(c)
 		resp, tt, err := storage.GetUserList(*pagination)
@@ -46,6 +48,4 @@ func UserService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		storage.ChangeUserLevel(*lvl)
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", nil))
 	})
-	E.Use(G.Handlers...)
-
 }

@@ -1,7 +1,7 @@
 package vo
 
 import (
-	"Simp/servers/BlogServer/obj/dao"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
 	"time"
 )
 

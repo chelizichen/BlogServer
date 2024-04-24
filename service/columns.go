@@ -1,18 +1,18 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/obj/dao"
-	"Simp/servers/BlogServer/storage"
-	"Simp/servers/BlogServer/utils"
-	handlers "Simp/src/http"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
+	"Sgrid/server/SubServer/BlogServer/storage"
+	"Sgrid/server/SubServer/BlogServer/utils"
+	handlers "Sgrid/src/http"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ColumnsService(ctx *handlers.SimpHttpServerCtx, pre string) {
-	E := ctx.Engine
-	G := E.Group(pre)
+func ColumnsService(ctx *handlers.SgridServerCtx) {
+	G := ctx.Engine.Group(strings.ToLower(ctx.Name))
 	G.GET("/getColumnDetail", utils.ValidateTokenMiddleware, func(c *gin.Context) {
 		id, _ := strconv.Atoi(c.Query("id"))
 		res := storage.GetColumnDetail(id)
@@ -44,5 +44,4 @@ func ColumnsService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		i := storage.DeleteColumnById(id)
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", i))
 	})
-	E.Use(G.Handlers...)
 }

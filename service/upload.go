@@ -1,10 +1,12 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/obj/dao"
-	"Simp/servers/BlogServer/storage"
-	"Simp/servers/BlogServer/utils"
-	handlers "Simp/src/http"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
+	"Sgrid/server/SubServer/BlogServer/storage"
+	"Sgrid/server/SubServer/BlogServer/utils"
+	handlers "Sgrid/src/http"
+	"Sgrid/src/public"
+
 	"fmt"
 	"net/http"
 	"os"
@@ -21,9 +23,8 @@ func Cors(c *gin.Context) {
 	c.Next()
 }
 
-func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
-	E := ctx.Engine
-	G := E.Group(pre)
+func UploadService(ctx *handlers.SgridServerCtx) {
+	G := ctx.Engine.Group(strings.ToLower(ctx.Name))
 	G.Use(Cors)
 	G.POST("/saveUploadInfo", func(c *gin.Context) {
 		var upload *dao.UploadInfo
@@ -52,7 +53,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	G.GET("/checkChunk", func(c *gin.Context) {
 		hash := c.Query("hash")
 		hashPath := fmt.Sprintf("./uploadFile/%s", hash)
-		hashPath = utils.JoinPathUtil(hashPath)
+		hashPath = public.Join(hashPath)
 		chunkList := []string{}
 		isExistPath, err := PathExists(hashPath)
 		if err != nil {
@@ -90,7 +91,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		fileHash := c.PostForm("hash")
 		file, err := c.FormFile("file")
 		hashPath := fmt.Sprintf("./uploadFile/%s", fileHash)
-		hashPath = utils.JoinPathUtil(hashPath)
+		hashPath = public.Join(hashPath)
 		if err != nil {
 			fmt.Println("获取上传文件失败", err)
 		}
@@ -105,7 +106,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		}
 		s := fmt.Sprintf("./uploadFile/%s/%s", fileHash, file.Filename)
 		fmt.Println("SaveUploadedFile before", s)
-		s = utils.JoinPathUtil(s)
+		s = public.Join(s)
 		fmt.Println("SaveUploadedFile after", s)
 		// go func() {
 		go func() {
@@ -142,7 +143,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		size := c.Query("size") // 传过来的需要和文件中的一样
 		Size, err := strconv.Atoi(size)
 		hashPath := fmt.Sprintf("./uploadFile/%s", hash)
-		hashPath = utils.JoinPathUtil(hashPath)
+		hashPath = public.Join(hashPath)
 		isExistPath, err := PathExists(hashPath)
 		if err != nil {
 			fmt.Println("获取hash路径错误", err)
@@ -223,7 +224,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 
 	G.GET("/getFiles", func(ctx *gin.Context) {
 		var uploadPath string = "uploadFile"
-		var staticPath string = utils.JoinPathUtil(uploadPath)
+		var staticPath string = public.Join(uploadPath)
 		fmt.Println("staticPath", staticPath)
 		de, err := os.ReadDir(staticPath)
 		dirString := make([]map[string]interface{}, 0)
@@ -239,7 +240,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 			if v.IsDir() {
 				m["hash"] = v.Name()
 				s := filepath.Join("uploadFile", v.Name())
-				s = utils.JoinPathUtil(s)
+				s = public.Join(s)
 				fmt.Println("dir || ", s)
 				tgz, err := os.ReadDir(s)
 				if err != nil {
@@ -261,7 +262,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 
 	G.GET("/deletePackage", func(ctx *gin.Context) {
 		var dir = ctx.Query("dir")
-		staticPath := utils.JoinPathUtil(dir)
+		staticPath := public.Join(dir)
 		fmt.Println("delete staticPath", staticPath)
 		err := DeleteDirectory(staticPath)
 		if err != nil {
@@ -272,7 +273,7 @@ func UploadService(ctx *handlers.SimpHttpServerCtx, pre string) {
 }
 
 func CreateUploadPath() {
-	s := utils.JoinPathUtil("uploadFile")
+	s := public.Join("uploadFile")
 	b, err := PathExists(s)
 	if err != nil {
 		fmt.Println("CreateUploadPath | Error", err.Error())

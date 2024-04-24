@@ -1,13 +1,15 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/obj/dto"
-	"Simp/servers/BlogServer/obj/vo"
-	"Simp/servers/BlogServer/storage"
-	"Simp/servers/BlogServer/utils"
-	handlers "Simp/src/http"
+	"Sgrid/server/SubServer/BlogServer/obj/dto"
+	"Sgrid/server/SubServer/BlogServer/obj/vo"
+	"Sgrid/server/SubServer/BlogServer/storage"
+	"Sgrid/server/SubServer/BlogServer/utils"
+	"Sgrid/src/http"
+	handlers "Sgrid/src/http"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -15,9 +17,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
-	E := ctx.Engine
-	G := E.Group(pre)
+func LoginService(ctx *http.SgridServerCtx) {
+	G := ctx.Engine.Group(strings.ToLower(ctx.Name))
 	G.POST("/loginByCache", utils.ValidateTokenMiddleware, func(c *gin.Context) {
 		value, exists := c.Get(utils.USER_INFO)
 		if !exists {
@@ -95,5 +96,4 @@ func LoginService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		}
 		c.AbortWithStatusJSON(200, handlers.Resp(-1, "error", err.Error()))
 	})
-
 }

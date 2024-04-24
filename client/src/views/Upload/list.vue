@@ -17,6 +17,6 @@ const list = ref([]);
 const keyword = ref("");
 onMounted(async () => {
   const data = await API.getUploadInfoList(keyword.value);
-  list.value = data.Data.list;
+  list.value = data.data.list;
 });
 </script>

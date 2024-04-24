@@ -78,11 +78,11 @@ const Types: Record<string, string> = {
 };
 async function getList() {
   const data = await getArticleList(pagination.value);
-  articleList.value = data.Data.list.map((v: any) => {
+  articleList.value = data.data.list.map((v: any) => {
     v.type = Types[v.type];
     return v;
   });
-  total.value = data.Data.total;
+  total.value = data.data.total;
 }
 
 onMounted(() => {

@@ -1,23 +1,24 @@
 package service
 
 import (
-	"Simp/servers/BlogServer/utils"
-	handlers "Simp/src/http"
+	handlers "Sgrid/src/http"
+	"Sgrid/src/public"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
-func ImgService(ctx *handlers.SimpHttpServerCtx, pre string) {
-	E := ctx.Engine
-	G := E.Group(pre)
+func ImgService(ctx *handlers.SgridServerCtx) {
+	G := ctx.Engine.Group(strings.ToLower(ctx.Name))
+
 	G.POST("/blogImg", func(c *gin.Context) {
 		file, err := c.FormFile("file")
 		u := uuid.New()
 		file.Filename = "uid_" + u.String() + "_" + file.Filename
-		path := utils.JoinPathUtil("./imgs/" + file.Filename)
+		path := public.Join("./imgs/" + file.Filename)
 		if err != nil {
 			resp := make(map[string]interface{})
 			resp["errno"] = -1
@@ -40,7 +41,7 @@ func ImgService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	})
 
 	G.GET("/getPics", func(c *gin.Context) {
-		path := utils.JoinPathUtil("./imgs/")
+		path := public.Join("./imgs/")
 		de, err := os.ReadDir(path)
 		if err != nil {
 			c.AbortWithStatusJSON(0, handlers.Resp(-1, err.Error(), err))
@@ -58,7 +59,7 @@ func ImgService(ctx *handlers.SimpHttpServerCtx, pre string) {
 	G.GET("/delPic", func(c *gin.Context) {
 		s := c.Query("imgPath")
 		fmt.Println("s", s)
-		path := utils.JoinPathUtil("./imgs/", s)
+		path := public.Join("./imgs/", s)
 
 		err := os.Remove(path)
 		if err != nil {
@@ -67,5 +68,4 @@ func ImgService(ctx *handlers.SimpHttpServerCtx, pre string) {
 		}
 		c.AbortWithStatusJSON(200, handlers.Resp(0, "ok", nil))
 	})
-	E.Use(G.Handlers...)
 }

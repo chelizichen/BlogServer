@@ -1,8 +1,8 @@
 package storage
 
 import (
-	c "Simp/servers/BlogServer/configuration"
-	"Simp/servers/BlogServer/obj/dao"
+	c "Sgrid/server/SubServer/BlogServer/configuration"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
 	"fmt"
 )
 

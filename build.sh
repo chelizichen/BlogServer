@@ -5,10 +5,10 @@
 readonly ServerName="BlogServer"
 
 # rm
-rm ./$ServerName.tar.gz ./service_go
+rm ./$ServerName.tar.gz ./sgrid_app
 
 # compile
-GOOS=linux GOARCH=amd64 go build -o service_go
+GOOS=linux GOARCH=amd64 go build -o sgrid_app
 
 # build
-tar -cvf $ServerName.tar.gz ./simp.yaml ./service_go ./dist
+tar -cvf $ServerName.tar.gz ./sgrid.yml ./sgrid_app ./dist

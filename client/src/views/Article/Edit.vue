@@ -110,11 +110,11 @@ const onSubmit = async () => {
     content: valueHtml.value,
   };
   const resp = await saveArticle(body);
-  if (resp.Code) {
-    ElMessage.error(`error! ${resp.Message}`);
+  if (resp.code) {
+    ElMessage.error(`error! ${resp.message}`);
     return (loading.value = false);
   }
-  createId.value = resp.Data;
+  createId.value = resp.data;
   chooseColumn();
   return (loading.value = false);
 };
@@ -132,6 +132,6 @@ async function chooseColumn() {
   centerDialogVisible.value = true;
   chooseId.value = createId.value || route.query.id;
   const data = await getColumns(params.value);
-  chooseColumnList.value = data.Data.list;
+  chooseColumnList.value = data.data.list;
 }
 </script>

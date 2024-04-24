@@ -37,7 +37,7 @@ import router from "@/router";
 
 onMounted(async () => {
   const data = await getColumns(params.value);
-  list.value = data.Data.list;
+  list.value = data.data.list;
 });
 const params = ref({
   offset: 0,

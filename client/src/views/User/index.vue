@@ -41,7 +41,7 @@ const visibleState = reactive({
 
 async function init() {
   const data = await getUserList(params.value);
-  list.value = data.Data.list
+  list.value = data.data.list
     .filter((v) => v)
     .map((v) => {
       v.create_time = dayjs(v.create_time).format("YYYY-MM-DD HH:mm:ss");

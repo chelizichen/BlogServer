@@ -51,8 +51,8 @@ async function submitSaveIntoColumn() {
     cid: currentRow.value.column.id
   }
   const data = await saveArticleInColumn(body)
-  if(data.Code){
-    ElMessage.error(data.Message)
+  if(data.code){
+    ElMessage.error(data.message)
     return
   }
   ElMessage.success("设置成功")
@@ -73,9 +73,6 @@ const setCurrent = (id) => {
 defineExpose({
   setCurrent
 })
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

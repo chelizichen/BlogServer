@@ -27,49 +27,48 @@
       <el-input v-model="form.content" type="textarea" />
     </el-form-item>
     <el-form-item label="Pay">
-        <el-input-number v-model="form.eventPay" />
+      <el-input-number v-model="form.eventPay" />
     </el-form-item>
     <el-form-item>
-      <el-button 
-      style="background-color: rgb(207, 15, 124); border: none"
-      type="primary" 
-      @click="onSubmit">Create</el-button>
+      <el-button
+        style="background-color: rgb(207, 15, 124); border: none"
+        type="primary"
+        @click="onSubmit"
+        >Create</el-button
+      >
       <el-button>Cancel</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script lang="ts" setup>
-import { saveEvent } from '@/api/event'
-import router from '@/router';
-import { ElMessage } from 'element-plus';
-import { reactive } from 'vue'
+import { saveEvent } from "@/api/event";
+import router from "@/router";
+import { ElMessage } from "element-plus";
+import { reactive } from "vue";
 
 // do not use same name with ref
 const form = reactive({
-    startTime: '',
-    endTime: '',
-    title: '',
-    content: '',
-    eventPay: 0,
-})
+  startTime: "",
+  endTime: "",
+  title: "",
+  content: "",
+  eventPay: 0,
+});
 
 const onSubmit = () => {
-  saveEvent(form).then(data=>{
-    console.log('data',data);
-    if(data.Code){
-        ElMessage.error(data.Message)
-        return
-    }
-    router.push('/effs')
-  }).catch(e=>{
-    console.log('e',e);
-    ElMessage.error(e.Message)
-    // if(data.Code){
-    //     ElMessage.error(data.Message)
-    //     return
-    // }
-  })
- 
-}
+  saveEvent(form)
+    .then((data) => {
+      console.log("data", data);
+      if (data.code) {
+        ElMessage.error(data.message);
+        return;
+      }
+      router.push("/effs");
+    })
+    .catch((e) => {
+      console.log("e", e);
+      ElMessage.error(e.message);
+    });
+};
 </script>

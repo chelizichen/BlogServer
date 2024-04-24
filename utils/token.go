@@ -1,10 +1,10 @@
 package utils
 
 import (
-	c "Simp/servers/BlogServer/configuration"
-	"Simp/servers/BlogServer/obj/dao"
-	"Simp/servers/BlogServer/obj/vo"
-	handlers "Simp/src/http"
+	c "Sgrid/server/SubServer/BlogServer/configuration"
+	"Sgrid/server/SubServer/BlogServer/obj/dao"
+	"Sgrid/server/SubServer/BlogServer/obj/vo"
+	handler "Sgrid/src/http"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -98,15 +98,15 @@ func DelTokenKey(Key string) int64 {
 func ValidateTokenMiddleware(c *gin.Context) {
 	s := c.Request.Header["Token"]
 	if len(s) == 0 {
-		c.AbortWithStatusJSON(http.StatusOK, handlers.Resp(-1101, "token validate error", nil))
+		c.AbortWithStatusJSON(http.StatusOK, handler.Resp(-1101, "token validate error", nil))
 		return
 	}
 	value, err := ValidateToken(s)
 	if value == "" || err != nil {
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusOK, handlers.Resp(-1102, "token validate error", err.Error()))
+			c.AbortWithStatusJSON(http.StatusOK, handler.Resp(-1102, "token validate error", err.Error()))
 		} else {
-			c.AbortWithStatusJSON(http.StatusOK, handlers.Resp(-1101, "token validate error", nil))
+			c.AbortWithStatusJSON(http.StatusOK, handler.Resp(-1101, "token validate error", nil))
 		}
 	} else {
 		c.Set(USER_INFO, value)
