@@ -4,7 +4,7 @@ import request from '@/utils/node_req'
 export function getEvents(params: any) {
   return request({
     method: 'get',
-    url: 'getEvents',
+    url: '/event/getEvents',
     params
   }) as unknown as Promise<BasicResp<any>>
 }
@@ -12,16 +12,15 @@ export function getEvents(params: any) {
 export function saveEvent(data: any) {
   return request({
     method: 'post',
-    url: 'saveEvent',
+    url: '/event/saveEvent',
     data
   }) as unknown as Promise<BasicResp<any>>
 }
 
-
 export function changeStatus(data: any) {
   return request({
     method: 'post',
-    url: 'changeStatus',
+    url: '/event/changeStatus',
     data
   }) as unknown as Promise<BasicResp<any>>
 }
@@ -29,7 +28,7 @@ export function changeStatus(data: any) {
 export function getCommentsByEventId(params: any) {
   return request({
     method: 'get',
-    url: 'getCommentsByEventId',
+    url: '/event/getCommentsByEventId',
     params
   }) as unknown as Promise<BasicResp<any>>
 }
@@ -37,7 +36,7 @@ export function getCommentsByEventId(params: any) {
 export function deleteEvent(data: any) {
   return request({
     method: 'post',
-    url: 'deleteEvent',
+    url: '/event/deleteEvent',
     data
   }) as unknown as Promise<BasicResp<any>>
 }
