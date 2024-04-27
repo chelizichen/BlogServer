@@ -74,8 +74,8 @@ async function GetById() {
   }
   const query = { id };
   const res = await getArticle(query);
-  valueHtml.value = res.Data.content;
-  form.title = res.Data.title;
+  valueHtml.value = res.data.content;
+  form.title = res.data.title;
   console.log("res");
 }
 // 模拟 ajax 异步获取内容

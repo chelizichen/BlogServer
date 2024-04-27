@@ -185,7 +185,7 @@ async function SubmitEditForm() {
 }
 function EditForm(row) {
   getCommentsByEventId({ id: row.id }).then((res) => {
-    commentList.value = res.Data;
+    commentList.value = res.data;
   });
   editDataVisible.value = true;
   editData.value = cloneDeep(row);
